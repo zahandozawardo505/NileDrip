@@ -1,18 +1,155 @@
-//empty
-//hello
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NileDrip</title>
-    <link rel="stylesheet" href="../CSS/style.css">  
+    <title>NileDrip - Local Brands, Maximum Drip</title>
+    <link rel="stylesheet" href="../CSS/style.css">
 </head>
 <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <a href="main.html" class="logo">
+                    <span class="nile">NILE</span><span class="drip">DRIP</span>
+                </a>
+            </div>
+            <div class="navbar-menu" id="navbarMenu">
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="login.html" class="nav-link">Login</a>
+                <a href="signup.html" class="nav-link">Sign Up</a>
+                <a href="#seller" class="nav-link">Become a Seller</a>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+            </button>
+            <button class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
 
-    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="word">Local</span>
+                <span class="word">Brands.</span>
+                <span class="word">Maximum</span>
+                <span class="word">Drip.</span>
+            </h1>
+            <p class="hero-subtitle">The Nile's fashion destination for independent creators</p>
+            <div class="hero-cta">
+                <a href="shop.html" class="btn btn-primary">Start Shopping</a>
+                <a href="seller-signup.html" class="btn btn-secondary">Become a Seller</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="accent-blob accent-blob-1"></div>
+            <div class="accent-blob accent-blob-2"></div>
+            <div class="accent-blob accent-blob-3"></div>
+        </div>
+    </section>
 
-<script src="../JS/script.js"></script>  
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Why NileDrip?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Curated Local Brands</h3>
+                    <p>Discover exclusive pieces from Egyptian creators who pour their soul into every design</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Zero Middleman</h3>
+                    <p>Direct from creators to you. No corporate BS, just pure drip</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <h3>Verified Sellers</h3>
+                    <p>Every seller is authenticated. Quality guaranteed</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Ship Anywhere</h3>
+                    <p>Local or abroad. We've got you covered</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">Shop by Category</h2>
+            <div class="categories-grid">
+                <a href="shop.html?category=hoodies" class="category-card" style="--color: #FF006E">
+                    <span class="category-name">Hoodies</span>
+                </a>
+                <a href="shop.html?category=tees" class="category-card" style="--color: #00D9FF">
+                    <span class="category-name">T-Shirts</span>
+                </a>
+                <a href="shop.html?category=sweatpants" class="category-card" style="--color: #FFB703">
+                    <span class="category-name">Sweatpants</span>
+                </a>
+                <a href="shop.html?category=accessories" class="category-card" style="--color: #8338EC">
+                    <span class="category-name">Accessories</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seller Section -->
+    <section class="seller-cta" id="seller">
+        <div class="container">
+            <div class="seller-content">
+                <h2>Got a Brand? Start Selling</h2>
+                <p>Join thousands of creators building their empire on NileDrip</p>
+                <a href="seller-signup.html" class="btn btn-primary">Apply Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About NileDrip</h4>
+                    <p>Supporting local Egyptian fashion brands with zero middleman</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="seller-signup.html">Become a Seller</a></li>
+                        <li><a href="login.html">Login</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: hello@niledrip.com<br>Cairo, Egypt</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 NileDrip. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../JS/script.js"></script>
 </body>
 </html>
