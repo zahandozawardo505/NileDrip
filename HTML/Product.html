@@ -1,15 +1,229 @@
+Tarekkk
+mohamed1232_
+In voice
+
+This is the start of the #tarek channel. 
+Tarekkk — 22:19
+seller Dashboard
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NileDrip</title>
-    <link rel="stylesheet" href="../CSS/style.css">  
+    <title>NileDrip | Seller Dashboard</title>
+
+message.txt
+21 KB
+product
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NileDrip | Product</title>
+
+message.txt
+10 KB
+Tarekkk — 23:15
+product deadline 18/4 12;15 am
+Tarekkk — 23:27
+Seller Dashboard deadline 18/4 night ---- make sure karim finished seller signup
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NileDrip | Product</title>
+    <link rel="stylesheet" href="../CSS/style.css">
 </head>
 <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <a href="main.html" class="logo">
+                    <span class="nile">NILE</span><span class="drip">DRIP</span>
+                </a>
+            </div>
+            <div class="navbar-menu" id="navbarMenu">
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="login.html" class="nav-link">Login</a>
+                <a href="signup.html" class="nav-link">Sign Up</a>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+            </button>
+            <button class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
 
-    
+    <!-- Product Section -->
+    <section class="product-section">
+        <div class="container">
+            <a href="shop.html" class="back-link">← Back to Shop</a>
 
-<script src="../JS/script.js"></script>  
+            <div class="product-layout">
+                <!-- Product Images -->
+                <div class="product-images">
+                    <div class="main-image">
+                        <img id="mainImage" src="https://via.placeholder.com/500x600" alt="Product">
+                    </div>
+                    <div class="thumbnail-images">
+                        <img class="thumbnail" src="https://via.placeholder.com/100x120" alt="View 1">
+                        <img class="thumbnail" src="https://via.placeholder.com/100x120" alt="View 2">
+                        <img class="thumbnail" src="https://via.placeholder.com/100x120" alt="View 3">
+                    </div>
+                </div>
+
+                <!-- Product Details -->
+                <div class="product-details">
+                    <div class="breadcrumb">
+                        <a href="shop.html">Shop</a> / <span id="productCategory">Category</span>
+                    </div>
+
+                    <h1 id="productName">Premium Oversized Hoodie</h1>
+                    <div class="product-rating">
+                        <div class="stars">★★★★★</div>
+                        <span>(128 reviews)</span>
+                    </div>
+
+                    <div class="product-price">
+                        <span class="current-price" id="productPrice">550</span>
+                        <span class="currency">EGP</span>
+                    </div>
+
+                    <p class="product-description" id="productDescription">
+                        Premium quality oversized hoodie made from 100% organic cotton. Perfect for that laid-back drip. Available in multiple colors and sizes.
+                    </p>
+
+                    <!-- Size Selection -->
+                    <div class="form-group">
+                        <label>Size</label>
+                        <div class="size-options">
+                            <button class="size-btn" data-size="XS">XS</button>
+                            <button class="size-btn" data-size="S">S</button>
+                            <button class="size-btn active" data-size="M">M</button>
+                            <button class="size-btn" data-size="L">L</button>
+                            <button class="size-btn" data-size="XL">XL</button>
+                            <button class="size-btn" data-size="XXL">XXL</button>
+                        </div>
+                        <span class="error-message" id="sizeError"></span>
+                    </div>
+
+                    <!-- Color Selection -->
+                    <div class="form-group">
+                        <label>Color</label>
+                        <div class="color-options">
+                            <button class="color-btn" data-color="Black" style="background: #000;"></button>
+                            <button class="color-btn" data-color="White" style="background: #fff; border: 2px solid #ddd;"></button>
+                            <button class="color-btn active" data-color="Grey" style="background: #888;"></button>
+                            <button class="color-btn" data-color="Navy" style="background: #001f3f;"></button>
+                        </div>
+                    </div>
+
+                    <!-- Quantity -->
+                    <div class="form-group">
+                        <label>Quantity</label>
+                        <div class="quantity-selector">
+                            <button class="qty-btn" id="decreaseQty">−</button>
+                            <input type="number" id="quantity" value="1" min="1" max="10">
+                            <button class="qty-btn" id="increaseQty">+</button>
+                        </div>
+                        <span class="stock-status" id="stockStatus">In Stock (5 available)</span>
+                    </div>
+
+                    <!-- Add to Cart -->
+                    <button class="btn btn-primary btn-block btn-large" id="addToCartBtn">Add to Cart</button>
+                    <button class="btn btn-secondary btn-block">Wishlist ❤️</button>
+
+                    <!-- Product Info -->
+                    <div class="product-info">
+                        <div class="info-item">
+                            <span class="info-icon">🚚</span>
+                            <div>
+                                <h4>Free Shipping</h4>
+                                <p>On orders over 300 EGP</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">↩️</span>
+                            <div>
+                                <h4>Easy Returns</h4>
+                                <p>14-day money-back guarantee</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">🔒</span>
+                            <div>
+                                <h4>Secure Checkout</h4>
+                                <p>Encrypted & verified payment</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Seller Info -->
+                    <div class="seller-card">
+                        <h4>Sold by</h4>
+                        <a href="#" class="seller-link">
+                            <strong>Raak Brand</strong>
+                            <span class="seller-rating">★★★★★ (342 reviews)</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Related Products -->
+            <section class="related-products">
+                <h2>Related Products</h2>
+                <div class="products-grid">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About NileDrip</h4>
+                    <p>Supporting local Egyptian fashion brands with zero middleman</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="seller-signup.html">Become a Seller</a></li>
+                        <li><a href="login.html">Login</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: hello@niledrip.com<br>Cairo, Egypt</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 NileDrip. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../JS/script.js"></script>
 </body>
 </html>
+message.txt
+10 KB
