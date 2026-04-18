@@ -164,3 +164,159 @@
                         </table>
                     </div>
                 </div>
+                <div class="admin-tab" id="sellers">
+                    <h2>Seller Management</h2>
+                    <div class="admin-controls">
+                        <input type="text" class="search-input" placeholder="Search sellers...">
+                        <select class="filter-select">
+                            <option value="">All Status</option>
+                            <option value="verified">Verified</option>
+                            <option value="pending">Pending</option>
+                            <option value="suspended">Suspended</option>
+                        </select>
+                    </div>
+                    <div class="admin-table-wrapper">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Brand Name</th>
+                                    <th>Owner</th>
+                                    <th>Products</th>
+                                    <th>Revenue</th>
+                                    <th>Rating</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Raak Brand</td>
+                                    <td>Mohamed Ahmed</td>
+                                    <td>24</td>
+                                    <td>125,500 EGP</td>
+                                    <td>★★★★★ (342)</td>
+                                    <td><span class="status-badge verified">Verified</span></td>
+                                    <td>
+                                        <button class="btn btn-small">View</button>
+                                        <button class="btn btn-small btn-danger">Suspend</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Urban Cairo</td>
+                                    <td>Sara Mohammed</td>
+                                    <td>18</td>
+                                    <td>89,200 EGP</td>
+                                    <td>★★★★☆ (215)</td>
+                                    <td><span class="status-badge verified">Verified</span></td>
+                                    <td>
+                                        <button class="btn btn-small">View</button>
+                                        <button class="btn btn-small btn-danger">Suspend</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="admin-tab" id="verification">
+                    <h2>Seller Verification Queue</h2>
+                    <p class="tab-subtitle">Review and approve pending seller applications</p>
+                    
+                    <div class="verification-cards">
+                        <div class="verification-card">
+                            <div class="verification-header">
+                                <h4>Desert Threads</h4>
+                                <span class="verification-badge pending">Pending Review</span>
+                            </div>
+                            <div class="verification-details">
+                                <p><strong>Owner:</strong> Karim Hassan</p>
+                                <p><strong>Email:</strong> karim@desertthreads.com</p>
+                                <p><strong>Phone:</strong> +20 1XX XXX XXXX</p>
+                                <p><strong>Applied:</strong> Dec 10, 2024</p>
+                                <p><strong>Business License:</strong> <a href="#" class="auth-link">View Document</a></p>
+                            </div>
+                            <div class="verification-actions">
+                                <button class="btn btn-primary" id="approveBtn">✓ Approve</button>
+                                <button class="btn btn-danger">✗ Reject</button>
+                                <button class="btn btn-secondary">Request Info</button>
+                            </div>
+                        </div>
+
+                        <div class="verification-card">
+                            <div class="verification-header">
+                                <h4>Kreative Co</h4>
+                                <span class="verification-badge pending">Pending Review</span>
+                            </div>
+                            <div class="verification-details">
+                                <p><strong>Owner:</strong> Laila Ahmed</p>
+                                <p><strong>Email:</strong> laila@kreativeco.com</p>
+                                <p><strong>Phone:</strong> +20 1XX XXX XXXX</p>
+                                <p><strong>Applied:</strong> Dec 8, 2024</p>
+                                <p><strong>Business License:</strong> <a href="#" class="auth-link">View Document</a></p>
+                            </div>
+                            <div class="verification-actions">
+                                <button class="btn btn-primary">✓ Approve</button>
+                                <button class="btn btn-danger">✗ Reject</button>
+                                <button class="btn btn-secondary">Request Info</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-tab" id="reports">
+                    <h2>Platform Reports</h2>
+                    <div class="reports-grid">
+                        <div class="report-card">
+                            <h3>Sales Report</h3>
+                            <p class="report-text">Total revenue, top sellers, product performance</p>
+                            <button class="btn btn-secondary">Generate Report</button>
+                        </div>
+                        <div class="report-card">
+                            <h3>User Activity</h3>
+                            <p class="report-text">Active users, sign-ups, engagement metrics</p>
+                            <button class="btn btn-secondary">Generate Report</button>
+                        </div>
+                        <div class="report-card">
+                            <h3>Seller Performance</h3>
+                            <p class="report-text">Seller ratings, product quality, customer feedback</p>
+                            <button class="btn btn-secondary">Generate Report</button>
+                        </div>
+                        <div class="report-card">
+                            <h3>Issue Resolution</h3>
+                            <p class="report-text">Reported issues, resolutions, pending cases</p>
+                            <button class="btn btn-secondary">Generate Report</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-tab" id="settings">
+                    <h2>Admin Settings</h2>
+                    <div class="settings-form">
+                        <h3>Platform Configuration</h3>
+                        <form id="adminSettingsForm">
+                            <div class="form-group">
+                                <label for="siteName">Site Name</label>
+                                <input type="text" id="siteName" value="NileDrip">
+                            </div>
+                            <div class="form-group">
+                                <label for="contactEmail">Contact Email</label>
+                                <input type="email" id="contactEmail" value="hello@niledrip.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="verificationFee">Seller Verification Fee (EGP)</label>
+                                <input type="number" id="verificationFee" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="maintenanceMode"> Enable Maintenance Mode
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Settings</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="../JS/script.js"></script>
+</body>
+</html>
