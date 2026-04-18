@@ -3,13 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NileDrip</title>
-    <link rel="stylesheet" href="../CSS/style.css">  
+    <title>NileDrip | Admin Panel</title>
+    <link rel="stylesheet" href="../CSS/style.css">
 </head>
-<body>
+<body class="admin-body">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <a href="main.html" class="logo">
+                    <span class="nile">NILE</span><span class="drip">DRIP</span>
+                </a>
+            </div>
+            <div class="navbar-menu" id="navbarMenu">
+                <a href="admin.html" class="nav-link active">Admin</a>
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="#" class="nav-link" id="logoutBtn">Logout</a>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+            </button>
+            <button class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
 
-    
+    <!-- Admin Section -->
+    <section class="admin-section">
+        <div class="container admin-container">
+            <!-- Sidebar -->
+            <aside class="admin-sidebar">
+                <div class="admin-header">
+                    <h3>Admin Panel</h3>
+                </div>
 
-<script src="../JS/script.js"></script>  
-</body>
-</html>
+                <nav class="admin-nav">
+                    <a href="#dashboard" class="admin-link active" data-tab="dashboard">
+                        <span>📊</span> Dashboard
+                    </a>
+                    <a href="#users" class="admin-link" data-tab="users">
+                        <span>👥</span> Users
+                    </a>
+                    <a href="#sellers" class="admin-link" data-tab="sellers">
+                        <span>🏪</span> Sellers
+                    </a>
+                    <a href="#verification" class="admin-link" data-tab="verification">
+                        <span>✅</span> Verifications
+                    </a>
+                    <a href="#reports" class="admin-link" data-tab="reports">
+                        <span>📈</span> Reports
+                    </a>
+                    <a href="#settings" class="admin-link" data-tab="settings">
+                        <span>⚙️</span> Settings
+                    </a>
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <div class="admin-content">
+                <!-- Dashboard Tab -->
+                <div class="admin-tab active" id="dashboard">
+                    <h2>Dashboard Overview</h2>
+                    <div class="admin-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon">👥</div>
+                            <h4>Total Users</h4>
+                            <p class="stat-number">2,450</p>
+                            <span class="stat-change">↑ 125 this month</span>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">🏪</div>
+                            <h4>Total Sellers</h4>
+                            <p class="stat-number">128</p>
+                            <span class="stat-change">↑ 12 verified this month</span>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">📦</div>
+                            <h4>Total Orders</h4>
+                            <p class="stat-number">8,340</p>
+                            <span class="stat-change">↑ 2.3% from last month</span>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">💰</div>
+                            <h4>Total Revenue</h4>
+                            <p class="stat-number">2.5M EGP</p>
+                            <span class="stat-change">↑ 18% from last month</span>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">⏳</div>
+                            <h4>Pending Verifications</h4>
+                            <p class="stat-number">23</p>
+                            <span class="stat-change">Awaiting review</span>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">⚠️</div>
+                            <h4>Reported Issues</h4>
+                            <p class="stat-number">7</p>
+                            <span class="stat-change">3 resolved this week</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Users Tab -->
+                <div class="admin-tab" id="users">
+                    <h2>User Management</h2>
+                    <div class="admin-controls">
+                        <input type="text" class="search-input" placeholder="Search users...">
+                        <button class="btn btn-secondary">Export List</button>
+                    </div>
+                    <div class="admin-table-wrapper">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>User ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Join Date</th>
+                                    <th>Orders</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#U001</td>
+                                    <td>Ahmed Hassan</td>
+                                    <td>ahmed@email.com</td>
+                                    <td>Dec 1, 2024</td>
+                                    <td>5</td>
+                                    <td><span class="status-badge active">Active</span></td>
+                                    <td>
+                                        <button class="btn btn-small">View</button>
+                                        <button class="btn btn-small btn-danger">Ban</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#U002</td>
+                                    <td>Fatima Ali</td>
+                                    <td>fatima@email.com</td>
+                                    <td>Dec 5, 2024</td>
+                                    <td>12</td>
+                                    <td><span class="status-badge active">Active</span></td>
+                                    <td>
+                                        <button class="btn btn-small">View</button>
+                                        <button class="btn btn-small btn-danger">Ban</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
