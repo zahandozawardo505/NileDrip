@@ -1,0 +1,160 @@
+.seller-signup-section {
+    padding: var(--spacing-2xl) var(--spacing-lg);
+}
+
+.seller-form-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: var(--spacing-2xl);
+}
+
+@media (max-width: 1024px) {
+    .seller-form-wrapper {
+        grid-template-columns: 1fr;
+    }
+}
+
+.seller-form-container {
+    background: var(--bg-primary);
+    padding: var(--spacing-xl);
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+}
+
+.seller-form-container h1 {
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: var(--spacing-md);
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-xl);
+}
+
+.seller-form {
+    position: relative;
+}
+
+.form-step {
+    display: none;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.form-step.active {
+    display: block;
+}
+
+.step-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: var(--spacing-lg);
+}
+
+.file-input-wrapper {
+    position: relative;
+    display: block;
+    cursor: pointer;
+}
+
+.file-input-wrapper input {
+    display: none;
+}
+
+.file-label {
+    display: block;
+    padding: var(--spacing-lg);
+    background: var(--bg-secondary);
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: 14px;
+}
+
+.file-input-wrapper:hover .file-label {
+    border-color: var(--primary-color);
+    background: rgba(255, 0, 110, 0.05);
+}
+
+.form-navigation {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-xl);
+}
+
+.form-navigation button {
+    flex: 1;
+}
+
+.step-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-xl);
+}
+
+.step-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    transition: all var(--transition-base);
+}
+
+.step-dot.active {
+    background: var(--primary-color);
+    color: white;
+}
+
+.step-line {
+    width: 30px;
+    height: 2px;
+    background: var(--border-color);
+}
+
+.seller-benefits {
+    background: var(--bg-secondary);
+    padding: var(--spacing-xl);
+    border-radius: 12px;
+    height: fit-content;
+    position: sticky;
+    top: 120px;
+}
+
+@media (max-width: 1024px) {
+    .seller-benefits {
+        position: static;
+    }
+}
+
+.seller-benefits h3 {
+    font-weight: 700;
+    margin-bottom: var(--spacing-lg);
+}
+
+.benefit-item {
+    margin-bottom: var(--spacing-lg);
+}
+
+.benefit-icon {
+    font-size: 24px;
+    margin-right: var(--spacing-sm);
+}
+
+.benefit-item h4 {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: var(--spacing-sm);
+}
+
+.benefit-item p {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
