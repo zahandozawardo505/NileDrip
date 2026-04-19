@@ -1,11 +1,4 @@
-/* ============================================
-   NILEDRIP - DASHBOARD & ADMIN PAGE STYLES
-   For: seller-dashboard.html, index.html
-   ============================================ */
-
-/* ============================================
-   DASHBOARD
-   ============================================ */
+/*DASHBOARD */
 
 .dashboard-section {
     padding: var(--spacing-xl) var(--spacing-lg);
