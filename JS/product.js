@@ -51,6 +51,6 @@ if (addToCartBtn) {
             return;
         }
 
-        alert(Added to cart: ${selectedSize.dataset.size} - Qty: ${quantityInput.value});
+       alert(`Added to cart: ${selectedSize.dataset.size} - Qty: ${quantityInput.value}`);
     });
 }
