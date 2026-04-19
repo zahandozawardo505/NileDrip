@@ -208,9 +208,203 @@
                     </div>
                 </div>
 
-<!-- Add Product Tab - Orders Tab - Analytics Tab - Settings Tab(Marwan) -->
- 
+<!-- Add Product Tab (done) - Orders Tab (done) - Analytics Tab (done) - Settings Tab(done)(Marwan) -->
 
+<!--Add Product Tab-->
+                <div class="dashboard-tab" id="add-product">
+                    <h2>Add New Product</h2>
+                    <form class="product-form" id="addProductForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="productName">Product Name *</label>
+                                <input 
+                                    type="text" 
+                                    id="productName" 
+                                    name="productName" 
+                                    placeholder="e.g., Premium Oversized Hoodie"
+                                    required
+                                >
+                                <span class="error-message" id="productNameError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="productCategory">Category *</label>
+                                <select id="productCategory" name="productCategory" required>
+                                    <option value="">Select category</option>
+                                    <option value="hoodies">Hoodies</option>
+                                    <option value="tees">T-Shirts</option>
+                                    <option value="sweatpants">Sweatpants</option>
+                                    <option value="accessories">Accessories</option>
+                                </select>
+                                <span class="error-message" id="productCategoryError"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="productPrice">Price (EGP) *</label>
+                                <input 
+                                    type="number" 
+                                    id="productPrice" 
+                                    name="productPrice" 
+                                    placeholder="500"
+                                    min="0"
+                                    step="0.01"
+                                    required
+                                >
+                                <span class="error-message" id="productPriceError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="productStock">Stock Amount *</label>
+                                <input 
+                                    type="number" 
+                                    id="productStock" 
+                                    name="productStock" 
+                                    placeholder="10"
+                                    min="0"
+                                    required
+                                >
+                                <span class="error-message" id="productStockError"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="productDescription">Description *</label>
+                            <textarea 
+                                id="productDescription" 
+                                name="productDescription" 
+                                placeholder="Describe your product in detail"
+                                rows="5"
+                                required
+                            ></textarea>
+                            <span class="error-message" id="productDescriptionError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="productImage">Product Image *</label>
+                            <div class="file-input-wrapper">
+                                <input 
+                                    type="file" 
+                                    id="productImage" 
+                                    name="productImage"
+                                    accept="image/*"
+                                    required
+                                >
+                                <span class="file-label">Upload product image</span>
+                            </div>
+                            <span class="error-message" id="productImageError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Sizes *</label>
+                            <div class="size-checkbox-group">
+                                <label class="size-checkbox">
+                                    <input type="checkbox" name="sizes" value="XS">
+                                    <span>XS</span>
+                                </label>
+                                <label class="size-checkbox">
+                                    <input type="checkbox" name="sizes" value="S">
+                                    <span>S</span>
+                                </label>
+                                <label class="size-checkbox">
+                                    <input type="checkbox" name="sizes" value="M">
+                                    <span>M</span>
+                                </label>
+                                <label class="size-checkbox">
+                                    <input type="checkbox" name="sizes" value="L">
+                                    <span>L</span>
+                                </label>
+                                <label class="size-checkbox">
+                                    <input type="checkbox" name="sizes" value="XL">
+                                    <span>XL</span>
+                                </label>
+                                <label class="size-checkbox">
+                                    <input type="checkbox" name="sizes" value="XXL">
+                                    <span>XXL</span>
+                                </label>
+                            </div>
+                            <span class="error-message" id="sizesError"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-large">Add Product</button>
+                    </form>
+                </div>
+
+                <!--Orders Tab-->
+                <div class="dashboard-tab" id="orders">
+                    <h2>Order Management</h2>
+                    <div class="dashboard-card">
+                        <table class="orders-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Product</th>
+                                    <th>Amount</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#ND001</td>
+                                    <td>Ahmed Hassan</td>
+                                    <td>Premium Hoodie</td>
+                                    <td>550 EGP</td>
+                                    <td>Dec 15, 2024</td>
+                                    <td><span class="status-badge pending">Pending</span></td>
+                                    <td><button class="btn btn-small">Mark Shipped</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!--Analytics Tab-->
+                <div class="dashboard-tab" id="analytics">
+                    <h2>Analytics</h2>
+                    <div class="analytics-grid">
+                        <div class="analytics-card">
+                            <h3>Sales This Month</h3>
+                            <p class="large-number">12,500 EGP</p>
+                            <p class="secondary-text">↑ 15% from last month</p>
+                        </div>
+                        <div class="analytics-card">
+                            <h3>Visitor Count</h3>
+                            <p class="large-number">1,245</p>
+                            <p class="secondary-text">↑ 8% from last month</p>
+                        </div>
+                        <div class="analytics-card">
+                            <h3>Conversion Rate</h3>
+                            <p class="large-number">3.2%</p>
+                            <p class="secondary-text">Average platform rate: 2.8%</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Settings Tab-->
+                <div class="dashboard-tab" id="settings">
+                    <h2>Account Settings</h2>
+                    <div class="settings-form">
+                        <h3>Brand Information</h3>
+                        <form id="settingsForm">
+                            <div class="form-group">
+                                <label for="settingsBrandName">Brand Name</label>
+                                <input type="text" id="settingsBrandName" value="Raak Brand">
+                            </div>
+                            <div class="form-group">
+                                <label for="settingsBrandEmail">Brand Email</label>
+                                <input type="email" id="settingsBrandEmail" value="raak@brand.com">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <script src="../JS/script.js"></script> 
 </body>
 </html>
