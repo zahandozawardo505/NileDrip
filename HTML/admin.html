@@ -18,7 +18,7 @@
             </div>
             <div class="navbar-menu" id="navbarMenu">
                 <a href="admin.html" class="nav-link active">Admin</a>
-                <a href="shop.html" class="nav-link">Shop</a>
+                
                 <a href="#" class="nav-link" id="logoutBtn">Logout</a>
             </div>
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -157,7 +157,7 @@
                                     <td>5</td>
                                     <td><span class="status-badge active">Active</span></td>
                                     <td>
-                                        <button class="btn btn-small">View</button>
+                                       
                                         <button class="btn btn-small btn-danger">Ban</button>
                                     </td>
                                 </tr>
@@ -169,7 +169,7 @@
                                     <td>12</td>
                                     <td><span class="status-badge active">Active</span></td>
                                     <td>
-                                        <button class="btn btn-small">View</button>
+                                        
                                         <button class="btn btn-small btn-danger">Ban</button>
                                     </td>
                                 </tr>
@@ -210,7 +210,7 @@
                                     <td>★★★★★ (342)</td>
                                     <td><span class="status-badge verified">Verified</span></td>
                                     <td>
-                                        <button class="btn btn-small">View</button>
+                                        
                                         <button class="btn btn-small btn-danger">Suspend</button>
                                     </td>
                                 </tr>
@@ -222,7 +222,7 @@
                                     <td>★★★★☆ (215)</td>
                                     <td><span class="status-badge verified">Verified</span></td>
                                     <td>
-                                        <button class="btn btn-small">View</button>
+                                        
                                         <button class="btn btn-small btn-danger">Suspend</button>
                                     </td>
                                 </tr>
@@ -246,12 +246,12 @@
                                 <p><strong>Email:</strong> karim@desertthreads.com</p>
                                 <p><strong>Phone:</strong> +20 1XX XXX XXXX</p>
                                 <p><strong>Applied:</strong> Dec 10, 2024</p>
-                                <p><strong>Business License:</strong> <a href="#" class="auth-link">View Document</a></p>
+                                <p><strong>Business License:</strong> <a href="../assets/This is a Business License.docx" class="auth-link">View Document</a></p>
                             </div>
                             <div class="verification-actions">
                                 <button class="btn btn-primary" id="approveBtn">✓ Approve</button>
                                 <button class="btn btn-danger">✗ Reject</button>
-                                <button class="btn btn-secondary">Request Info</button>
+                                
                             </div>
                         </div>
 
@@ -265,12 +265,12 @@
                                 <p><strong>Email:</strong> laila@kreativeco.com</p>
                                 <p><strong>Phone:</strong> +20 1XX XXX XXXX</p>
                                 <p><strong>Applied:</strong> Dec 8, 2024</p>
-                                <p><strong>Business License:</strong> <a href="#" class="auth-link">View Document</a></p>
+                                <p><strong>Business License:</strong> <a href="../assets/This is a Business License.docx" class="auth-link">View Document</a></p>
                             </div>
                             <div class="verification-actions">
                                 <button class="btn btn-primary">✓ Approve</button>
                                 <button class="btn btn-danger">✗ Reject</button>
-                                <button class="btn btn-secondary">Request Info</button>
+                                
                             </div>
                         </div>
                     </div>
@@ -281,53 +281,71 @@
                         <div class="report-card">
                             <h3>Sales Report</h3>
                             <p class="report-text">Total revenue, top sellers, product performance</p>
-                            <button class="btn btn-secondary">Generate Report</button>
+                            <a href="../assets/This is a Sample Report.docx" download><button class="btn btn-secondary">Generate Report</button></a>
                         </div>
                         <div class="report-card">
                             <h3>User Activity</h3>
                             <p class="report-text">Active users, sign-ups, engagement metrics</p>
-                            <button class="btn btn-secondary">Generate Report</button>
+                            <a href="../assets/This is a Sample Report.docx" download><button class="btn btn-secondary">Generate Report</button></a>
                         </div>
                         <div class="report-card">
                             <h3>Seller Performance</h3>
                             <p class="report-text">Seller ratings, product quality, customer feedback</p>
-                            <button class="btn btn-secondary">Generate Report</button>
+                            <a href="../assets/This is a Sample Report.docx" download><button class="btn btn-secondary">Generate Report</button></a>
                         </div>
                         <div class="report-card">
                             <h3>Issue Resolution</h3>
                             <p class="report-text">Reported issues, resolutions, pending cases</p>
-                            <button class="btn btn-secondary">Generate Report</button>
+                            <a href="../assets/This is a Sample Report.docx" download><button class="btn btn-secondary">Generate Report</button></a>
                         </div>
                     </div>
                 </div>
-                <div class="admin-tab" id="settings">
-                    <h2>Admin Settings</h2>
-                    <div class="settings-form">
-                        <h3>Platform Configuration</h3>
-                        <form id="adminSettingsForm">
-                            <div class="form-group">
-                                <label for="siteName">Site Name</label>
-                                <input type="text" id="siteName" value="NileDrip">
-                            </div>
-                            <div class="form-group">
-                                <label for="contactEmail">Contact Email</label>
-                                <input type="email" id="contactEmail" value="hello@niledrip.com">
-                            </div>
-                            <div class="form-group">
-                                <label for="verificationFee">Seller Verification Fee (EGP)</label>
-                                <input type="number" id="verificationFee" value="0">
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" id="maintenanceMode"> Enable Maintenance Mode
-                                </label>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Save Settings</button>
-                        </form>
-                    </div>
+<div class="admin-tab" id="settings">
+    <h2>Admin Settings</h2>
+    <div class="settings-grid">
+        <div class="settings-card">
+            <h3>Platform Configuration</h3>
+            <form id="adminSettingsForm">
+                <div class="form-group">
+                    <label for="siteName">Site Name</label>
+                    <input type="text" id="siteName" value="NileDrip">
                 </div>
-            </div>
+                <div class="form-group">
+                    <label for="contactEmail">Contact Email</label>
+                    <input type="email" id="contactEmail" value="hello@niledrip.com">
+                </div>
+                <div class="form-group">
+                    <label for="verificationFee">Seller Verification Fee (EGP)</label>
+                    <input type="number" id="verificationFee" value="0">
+                </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="maintenanceMode">
+                    <label for="maintenanceMode">Enable Maintenance Mode</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
         </div>
+
+        <div class="settings-card">
+            <h3>Security & Password</h3>
+            <form id="updatePasswordForm">
+                <div class="form-group">
+                    <label for="currentPassword">Current Password</label>
+                    <input type="password" id="currentPassword" placeholder="••••••••" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" placeholder="Min. 8 characters" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm New Password</label>
+                    <input type="password" id="confirmPassword" placeholder="Match new password" required>
+                </div>
+                <button type="submit" class="btn btn-secondary">Update Password</button>
+            </form>
+        </div>
+    </div>
+</div>
     </section>
 
     <script src="../JS/theme-menu.js"></script>
