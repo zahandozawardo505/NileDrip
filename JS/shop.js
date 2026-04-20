@@ -39,7 +39,7 @@ if (productsGrid) {
 
         products.forEach(product => {
             const card = document.createElement('a');
-            // FIXED: Capitalized 'P' to match your "Product.html" filename
+            // FIXED
             card.href = 'Product.html'; 
             card.className = 'product-card';
             card.innerHTML = `
