@@ -35,7 +35,7 @@ if (logoutBtn) {
     logoutBtn.addEventListener('click', (e) => {
         e.preventDefault();
         if (confirm('Are you sure you want to logout?')) {
-            window.location.href = 'main.html';
+            window.location.href = 'index.html';
         }
     });
 }
