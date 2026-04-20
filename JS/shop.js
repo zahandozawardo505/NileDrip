@@ -39,8 +39,7 @@ if (productsGrid) {
 
         products.forEach(product => {
             const card = document.createElement('a');
-            // FIXED
-            card.href = 'Product.html'; 
+            card.href = 'Product.html'; // Matches capitalized filename
             card.className = 'product-card';
             card.innerHTML = `
                 <div class="product-image">
@@ -82,34 +81,22 @@ if (productsGrid) {
         }
 
         const sortValue = sortSelect ? sortSelect.value : 'newest';
-        switch (sortValue) {
-            case 'price-low':
-                filtered.sort((a, b) => a.price - b.price);
-                break;
-            case 'price-high':
-                filtered.sort((a, b) => b.price - a.price);
-                break;
-            case 'popular':
-                filtered.sort(() => Math.random() - 0.5);
-                break;
-        }
+        if (sortValue === 'price-low') filtered.sort((a, b) => a.price - b.price);
+        if (sortValue === 'price-high') filtered.sort((a, b) => b.price - a.price);
 
         renderProducts(filtered);
     };
 
-    // Event listeners
+    // Listeners
     categoryFilters.forEach(filter => filter.addEventListener('change', filterProducts));
     brandFilters.forEach(filter => filter.addEventListener('change', filterProducts));
-
     if (priceRange) {
         priceRange.addEventListener('input', () => {
             if(priceValue) priceValue.textContent = priceRange.value;
             filterProducts();
         });
     }
-
     if (sortSelect) sortSelect.addEventListener('change', filterProducts);
-
     if (resetFiltersBtn) {
         resetFiltersBtn.addEventListener('click', () => {
             categoryFilters.forEach(cb => cb.checked = false);
@@ -122,5 +109,20 @@ if (productsGrid) {
         });
     }
 
-    renderProducts(mockProducts);
+    // --- URL CATEGORY LISTENER ---
+    // This part checks the address bar (e.g., ?category=hoodies)
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryFromUrl = urlParams.get('category');
+
+    if (categoryFromUrl) {
+        const targetCheckbox = document.querySelector(`.category-filter[value="${categoryFromUrl}"]`);
+        if (targetCheckbox) {
+            targetCheckbox.checked = true;
+            filterProducts(); // Only show the category from the homepage
+        } else {
+            renderProducts(mockProducts); // Fallback to all if category doesn't exist
+        }
+    } else {
+        renderProducts(mockProducts); // Default load
+    }
 }
