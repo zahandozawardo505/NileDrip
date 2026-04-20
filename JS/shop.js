@@ -1,16 +1,16 @@
 const mockProducts = [
-    { id: 1, name: 'Premium Oversized Hoodie', category: 'hoodies', brand: 'brand1', price: 550, image: 'https://via.placeholder.com/200x250' },
-    { id: 2, name: 'Classic Logo Tee', category: 'tees', brand: 'brand2', price: 250, image: 'https://via.placeholder.com/200x250' },
-    { id: 3, name: 'Joggers Combo', category: 'sweatpants', brand: 'brand3', price: 450, image: 'https://via.placeholder.com/200x250' },
-    { id: 4, name: 'Desert Cap', category: 'accessories', brand: 'brand4', price: 150, image: 'https://via.placeholder.com/200x250' },
-    { id: 5, name: 'Oversized Windbreaker', category: 'hoodies', brand: 'brand1', price: 650, image: 'https://via.placeholder.com/200x250' },
-    { id: 6, name: 'Minimalist Tee', category: 'tees', brand: 'brand3', price: 200, image: 'https://via.placeholder.com/200x250' },
-    { id: 7, name: 'Track Pants', category: 'sweatpants', brand: 'brand2', price: 400, image: 'https://via.placeholder.com/200x250' },
-    { id: 8, name: 'Cotton Socks Set', category: 'accessories', brand: 'brand1', price: 100, image: 'https://via.placeholder.com/200x250' },
-    { id: 9, name: 'Vintage Hoodie', category: 'hoodies', brand: 'brand4', price: 500, image: 'https://via.placeholder.com/200x250' },
-    { id: 10, name: 'Blank Canvas Tee', category: 'tees', brand: 'brand1', price: 220, image: 'https://via.placeholder.com/200x250' },
-    { id: 11, name: 'Premium Sweatpants', category: 'sweatpants', brand: 'brand3', price: 480, image: 'https://via.placeholder.com/200x250' },
-    { id: 12, name: 'Limited Edition Cap', category: 'accessories', brand: 'brand2', price: 180, image: 'https://via.placeholder.com/200x250' }
+    { id: 1, name: 'Premium Oversized Hoodie', category: 'hoodies', brand: 'brand1', price: 550, image: '../assets/images/bmw.webp' },
+    { id: 2, name: 'Classic Logo Tee', category: 'tees', brand: 'brand2', price: 250, image: '../assets/images/product-2.jpg' },
+    { id: 3, name: 'Joggers Combo', category: 'sweatpants', brand: 'brand3', price: 450, image: '../assets/images/product-3.jpg' },
+    { id: 4, name: 'Desert Cap', category: 'accessories', brand: 'brand4', price: 150, image: '../assets/images/product-4.jpg' },
+    { id: 5, name: 'Oversized Windbreaker', category: 'hoodies', brand: 'brand1', price: 650, image: '../assets/images/product-5.jpg' },
+    { id: 6, name: 'Minimalist Tee', category: 'tees', brand: 'brand3', price: 200, image: '../assets/images/product-6.jpg' },
+    { id: 7, name: 'Track Pants', category: 'sweatpants', brand: 'brand2', price: 400, image: '../assets/images/product-7.jpg' },
+    { id: 8, name: 'Cotton Socks Set', category: 'accessories', brand: 'brand1', price: 100, image: '../assets/images/product-8.jpg' },
+    { id: 9, name: 'Vintage Hoodie', category: 'hoodies', brand: 'brand4', price: 500, image: '../assets/images/product-9.jpg' },
+    { id: 10, name: 'Blank Canvas Tee', category: 'tees', brand: 'brand1', price: 220, image: '../assets/images/product-10.jpg' },
+    { id: 11, name: 'Premium Sweatpants', category: 'sweatpants', brand: 'brand3', price: 480, image: '../assets/images/product-11.jpg' },
+    { id: 12, name: 'Limited Edition Cap', category: 'accessories', brand: 'brand2', price: 180, image: '../assets/images/product-12.jpg' }
 ];
 
 const productsGrid = document.getElementById('productsGrid');
