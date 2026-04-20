@@ -1,5 +1,5 @@
 const mockProducts = [
-    { id: 1, name: 'Premium Oversized Hoodie', category: 'hoodies', brand: 'brand1', price: 550, image: '../assets/images/bmw.webp' },
+    { id: 1, name: 'Premium Oversized Hoodie', category: 'hoodies', brand: 'brand1', price: 550, image: '../assets/images/product-1.jpg' },
     { id: 2, name: 'Classic Logo Tee', category: 'tees', brand: 'brand2', price: 250, image: '../assets/images/product-2.jpg' },
     { id: 3, name: 'Joggers Combo', category: 'sweatpants', brand: 'brand3', price: 450, image: '../assets/images/product-3.jpg' },
     { id: 4, name: 'Desert Cap', category: 'accessories', brand: 'brand4', price: 150, image: '../assets/images/product-4.jpg' },
