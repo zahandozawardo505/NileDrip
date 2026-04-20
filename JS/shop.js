@@ -29,17 +29,18 @@ if (productsGrid) {
         productsGrid.innerHTML = '';
 
         if (products.length === 0) {
-            noProducts.style.display = 'block';
-            productCount.textContent = '0';
+            if(noProducts) noProducts.style.display = 'block';
+            if(productCount) productCount.textContent = '0';
             return;
         }
 
-        noProducts.style.display = 'none';
-        productCount.textContent = products.length;
+        if(noProducts) noProducts.style.display = 'none';
+        if(productCount) productCount.textContent = products.length;
 
         products.forEach(product => {
             const card = document.createElement('a');
-            card.href = 'product.html';
+            // FIXED
+            card.href = 'Product.html'; 
             card.className = 'product-card';
             card.innerHTML = `
                 <div class="product-image">
@@ -59,7 +60,6 @@ if (productsGrid) {
     const filterProducts = () => {
         let filtered = [...mockProducts];
 
-        // Category filter
         const activeCategories = Array.from(categoryFilters)
             .filter(cb => cb.checked)
             .map(cb => cb.value);
@@ -68,7 +68,6 @@ if (productsGrid) {
             filtered = filtered.filter(p => activeCategories.includes(p.category));
         }
 
-        // Brand filter
         const activeBrands = Array.from(brandFilters)
             .filter(cb => cb.checked)
             .map(cb => cb.value);
@@ -77,12 +76,12 @@ if (productsGrid) {
             filtered = filtered.filter(p => activeBrands.includes(p.brand));
         }
 
-        // Price filter
-        const maxPrice = parseInt(priceRange.value);
-        filtered = filtered.filter(p => p.price <= maxPrice);
+        if (priceRange) {
+            const maxPrice = parseInt(priceRange.value);
+            filtered = filtered.filter(p => p.price <= maxPrice);
+        }
 
-        // Sorting
-        const sortValue = sortSelect.value;
+        const sortValue = sortSelect ? sortSelect.value : 'newest';
         switch (sortValue) {
             case 'price-low':
                 filtered.sort((a, b) => a.price - b.price);
@@ -93,43 +92,35 @@ if (productsGrid) {
             case 'popular':
                 filtered.sort(() => Math.random() - 0.5);
                 break;
-            default:
-                break;
         }
 
         renderProducts(filtered);
     };
 
-    // Event listeners for filters
-    categoryFilters.forEach(filter => {
-        filter.addEventListener('change', filterProducts);
-    });
-
-    brandFilters.forEach(filter => {
-        filter.addEventListener('change', filterProducts);
-    });
+    // Event listeners
+    categoryFilters.forEach(filter => filter.addEventListener('change', filterProducts));
+    brandFilters.forEach(filter => filter.addEventListener('change', filterProducts));
 
     if (priceRange) {
         priceRange.addEventListener('input', () => {
-            priceValue.textContent = priceRange.value;
+            if(priceValue) priceValue.textContent = priceRange.value;
             filterProducts();
         });
     }
 
-    if (sortSelect) {
-        sortSelect.addEventListener('change', filterProducts);
-    }
+    if (sortSelect) sortSelect.addEventListener('change', filterProducts);
 
     if (resetFiltersBtn) {
         resetFiltersBtn.addEventListener('click', () => {
             categoryFilters.forEach(cb => cb.checked = false);
             brandFilters.forEach(cb => cb.checked = false);
-            priceRange.value = 1000;
-            priceValue.textContent = 1000;
+            if(priceRange) {
+                priceRange.value = 1000;
+                if(priceValue) priceValue.textContent = 1000;
+            }
             filterProducts();
         });
     }
 
-    // Initial render
     renderProducts(mockProducts);
 }
