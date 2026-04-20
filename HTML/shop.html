@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NileDrip | Shop</title>
-     <link rel="stylesheet" href="..\CSS\style-base.css">
-   <link rel="stylesheet" href="../CSS/style-shop.css">
+    <link rel="stylesheet" href="../CSS/style-base.css">
+    <link rel="stylesheet" href="../CSS/style-shop.css">
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
             <div class="navbar-brand">
@@ -40,7 +39,6 @@
         </div>
     </nav>
 
-    <!-- Shop Header -->
     <section class="shop-header">
         <div class="container">
             <h1>Explore Local Drip</h1>
@@ -48,15 +46,12 @@
         </div>
     </section>
 
-    <!-- Shop Section -->
     <section class="shop-section">
         <div class="container">
             <div class="shop-layout">
-                <!-- Sidebar Filters -->
                 <aside class="shop-sidebar">
                     <h3 class="filter-title">Filters</h3>
 
-                    <!-- Category Filter -->
                     <div class="filter-group">
                         <h4>Category</h4>
                         <div class="filter-options">
@@ -79,7 +74,6 @@
                         </div>
                     </div>
 
-                    <!-- Brand Filter -->
                     <div class="filter-group">
                         <h4>Brand</h4>
                         <div class="filter-options">
@@ -102,7 +96,6 @@
                         </div>
                     </div>
 
-                    <!-- Price Range -->
                     <div class="filter-group">
                         <h4>Price Range</h4>
                         <input type="range" min="0" max="1000" value="1000" id="priceRange">
@@ -112,9 +105,7 @@
                     <button class="btn btn-secondary btn-block" id="resetFilters">Reset Filters</button>
                 </aside>
 
-                <!-- Products Grid -->
                 <div class="shop-main">
-                    <!-- Sort Options -->
                     <div class="shop-controls">
                         <select id="sortBy" class="sort-select">
                             <option value="newest">Newest</option>
@@ -122,15 +113,12 @@
                             <option value="price-low">Price: Low to High</option>
                             <option value="price-high">Price: High to Low</option>
                         </select>
-                        <p class="product-count"><span id="productCount">12</span> products</p>
+                        <p class="product-count"><span id="productCount">0</span> products</p>
                     </div>
 
-                    <!-- Products Grid -->
                     <div class="products-grid" id="productsGrid">
-                        <!-- Products will be populated by JavaScript -->
-                    </div>
+                        </div>
 
-                    <!-- No Products Message -->
                     <div class="no-products" id="noProducts" style="display: none;">
                         <p>No products found. Try adjusting your filters.</p>
                     </div>
@@ -139,7 +127,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -166,7 +153,7 @@
         </div>
     </footer>
 
-       <script src="../JS/theme-menu.js"></script>
+    <script src="../JS/theme-menu.js"></script>
     <script src="../JS/shop.js"></script>
 </body>
 </html>
