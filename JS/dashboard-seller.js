@@ -158,9 +158,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ✅ CANCEL BUTTON FIX
+    // CANCEL BUTTON FIX
     const cancelBtn = document.getElementById("closeEditModal");
     if (cancelBtn) {
         cancelBtn.addEventListener("click", closeEditModal);
     }
+    
 });
