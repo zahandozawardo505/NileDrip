@@ -1,10 +1,14 @@
-const addProductForm = document.getElementById('addProductForm');
+document.addEventListener("DOMContentLoaded", () => {
 
-if (addProductForm) {
+    const addProductForm = document.getElementById('addProductForm');
+
+    if (!addProductForm) return;
+
     addProductForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
         let isValid = true;
+
         const productName = document.getElementById('productName');
         const productCategory = document.getElementById('productCategory');
         const productPrice = document.getElementById('productPrice');
@@ -12,40 +16,62 @@ if (addProductForm) {
         const productDescription = document.getElementById('productDescription');
         const sizeCheckboxes = document.querySelectorAll('input[name="sizes"]:checked');
 
-        // Validation
+        // =====================
+        // VALIDATION
+        // =====================
         if (productName.value.trim().length < 3) {
-            showError(document.getElementById('productNameError'), 'Product name is required');
+            alert('Product name must be at least 3 characters');
             isValid = false;
         }
 
         if (!productCategory.value) {
-            showError(document.getElementById('productCategoryError'), 'Category is required');
+            alert('Category is required');
             isValid = false;
         }
 
         if (productPrice.value <= 0) {
-            showError(document.getElementById('productPriceError'), 'Price must be greater than 0');
+            alert('Price must be greater than 0');
             isValid = false;
         }
 
         if (productStock.value < 0) {
-            showError(document.getElementById('productStockError'), 'Stock must be valid');
+            alert('Stock must be valid');
             isValid = false;
         }
 
         if (productDescription.value.trim().length < 10) {
-            showError(document.getElementById('productDescriptionError'), 'Description must be at least 10 characters');
+            alert('Description must be at least 10 characters');
             isValid = false;
         }
 
         if (sizeCheckboxes.length === 0) {
-            showError(document.getElementById('sizesError'), 'Select at least one size');
+            alert('Select at least one size');
             isValid = false;
         }
 
-        if (isValid) {
-            alert('Product added successfully! (Demo)');
-            addProductForm.reset();
-        }
+        if (!isValid) return;
+
+        // =====================
+        // CREATE PRODUCT
+        // =====================
+        const newProduct = {
+            id: "ID" + Date.now(),
+            name: productName.value.trim(),
+            category: productCategory.value,
+            price: productPrice.value,
+            stock: productStock.value,
+            description: productDescription.value,
+            sizes: Array.from(sizeCheckboxes).map(s => s.value),
+            image: "https://via.placeholder.com/150"
+        };
+
+        // =====================
+        // CALL MAIN FUNCTION
+        // =====================
+        addProduct(newProduct);
+
+        alert("Product added successfully!");
+
+        addProductForm.reset();
     });
-}
+});
