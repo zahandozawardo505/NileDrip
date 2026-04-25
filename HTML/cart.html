@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NileDrip | Cart</title>
+    <link rel="stylesheet" href="../CSS/style-base.css">
+    <link rel="stylesheet" href="../CSS/style-cart.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <a href="../index.html" class="logo">
+                    <span class="nile">NILE</span><span class="drip">DRIP</span>
+                </a>
+            </div>
+            <div class="navbar-menu" id="navbarMenu">
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="cart.html" class="nav-link active">Cart</a>
+                <a href="login.html" class="nav-link">Login</a>
+                <a href="signup.html" class="nav-link">Sign Up</a>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+            </button>
+            <button class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <section class="cart-header">
+        <div class="container">
+            <h1>Your Cart <span class="cart-count-badge" id="cartCountBadge">0</span></h1>
+            <p>Review your items before checkout</p>
+        </div>
+    </section>
+
+    <section class="cart-section">
+        <div class="container">
+
+            <!-- Empty Cart State -->
+            <div class="cart-empty" id="cartEmpty" style="display: none;">
+                <div class="cart-empty-icon">🛒</div>
+                <h2>Your cart is empty</h2>
+                <p>Looks like you haven't added anything yet.</p>
+                <a href="shop.html" class="btn btn-primary btn-large">Start Shopping</a>
+            </div>
+
+            <!-- Cart Layout -->
+            <div class="cart-layout" id="cartLayout">
+                <div class="cart-items" id="cartItems">
+                    <!-- Items injected by JS -->
+                </div>
+
+                <aside class="cart-summary">
+                    <h3 class="summary-title">Order Summary</h3>
+
+                    <div class="summary-row">
+                        <span>Subtotal (<span id="summaryItemCount">0</span> items)</span>
+                        <span id="summarySubtotal">0 EGP</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <span id="summaryShipping">50 EGP</span>
+                    </div>
+                    <div class="summary-row promo-row">
+                        <input type="text" id="promoInput" placeholder="Promo code" class="promo-input">
+                        <button class="btn btn-secondary btn-small" id="applyPromo">Apply</button>
+                    </div>
+                    <div class="summary-row promo-applied" id="promoApplied" style="display: none;">
+                        <span>Discount (DEMO10)</span>
+                        <span id="promoDiscount" class="discount-value">-0 EGP</span>
+                    </div>
+                    <div class="summary-divider"></div>
+                    <div class="summary-row summary-total">
+                        <span>Total</span>
+                        <span id="summaryTotal">0 EGP</span>
+                    </div>
+
+                    <button class="btn btn-primary btn-block btn-checkout" id="checkoutBtn">
+                        Proceed to Checkout
+                    </button>
+                    <p class="demo-notice">This is a demo — checkout is not functional yet.</p>
+
+                    <a href="shop.html" class="continue-shopping">← Continue Shopping</a>
+                </aside>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Checkout Modal -->
+    <div class="modal-overlay" id="checkoutModal" style="display: none;">
+        <div class="modal">
+            <button class="modal-close" id="closeModal">&#x2715;</button>
+            <div class="modal-icon">🎉</div>
+            <h2>Order Placed! (Demo)</h2>
+            <p>This is a demo checkout. In the real version your order would be confirmed here.</p>
+            <p class="modal-order-id">Order #ND-<span id="modalOrderId"></span></p>
+            <button class="btn btn-primary btn-block" id="clearCartBtn">Clear Cart &amp; Continue</button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About NileDrip</h4>
+                    <p>Supporting local Egyptian fashion brands with zero middleman</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="seller-signup.html">Become a Seller</a></li>
+                        <li><a href="login.html">Login</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: hello@niledrip.com<br>Cairo, Egypt</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 NileDrip. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../JS/theme-menu.js"></script>
+    <script src="../JS/cart.js"></script>
+</body>
+</html>
