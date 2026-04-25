@@ -16,7 +16,11 @@ let promoApplied = false;
 function loadCart() {
     try {
         const stored = localStorage.getItem('niledrip_cart');
-        return stored ? JSON.parse(stored) : [...DEMO_ITEMS];
+        if (stored) {
+            const parsed = JSON.parse(stored);
+            return parsed.length > 0 ? parsed : [...DEMO_ITEMS];
+        }
+        return [...DEMO_ITEMS];
     } catch {
         return [...DEMO_ITEMS];
     }
@@ -94,7 +98,7 @@ function updateSummary() {
     }
 }
 
-// --- item controls ---
+// --- Event Delegation for item controls ---
 document.getElementById('cartItems').addEventListener('click', (e) => {
     const id = parseInt(e.target.dataset.id);
     if (!id) return;
@@ -149,7 +153,7 @@ document.getElementById('applyPromo').addEventListener('click', () => {
     }
 });
 
-// --- button ---
+// --- Checkout button ---
 document.getElementById('checkoutBtn').addEventListener('click', () => {
     if (cart.length === 0) return;
     const orderId = Math.floor(100000 + Math.random() * 900000);
