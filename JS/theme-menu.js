@@ -21,6 +21,25 @@ if (themeToggle) {
 }
 
 // ============================================
+// CART BADGE
+// ============================================
+
+function updateCartBadge() {
+    const badge = document.getElementById('cartNavBadge');
+    if (!badge) return;
+    try {
+        const cart = JSON.parse(localStorage.getItem('niledrip_cart') || '[]');
+        const total = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+        badge.textContent = total;
+        badge.style.display = total > 0 ? 'flex' : 'none';
+    } catch {
+        badge.style.display = 'none';
+    }
+}
+
+updateCartBadge();
+
+// ============================================
 // MOBILE MENU
 // ============================================
 
@@ -32,25 +51,3 @@ if (hamburger) {
         navbarMenu.style.display = navbarMenu.style.display === 'flex' ? 'none' : 'flex';
     });
 }
-document.addEventListener("DOMContentLoaded", () => {
-    const hero = document.querySelector('.hero');
-    const bg = document.querySelector('.hero-bg');
-
-    if (!hero || !bg) return;
-
-    hero.addEventListener('mousemove', (e) => {
-        const rect = hero.getBoundingClientRect();
-
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        bg.style.background = `
-            radial-gradient(
-                circle at ${x}px ${y}px,
-                rgba(255, 0, 110, 0.35),
-                rgba(0, 217, 255, 0.25),
-                transparent 60%
-            )
-        `;
-    });
-});
