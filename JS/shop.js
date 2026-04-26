@@ -19,7 +19,7 @@
 
     function addToCartFromShop(product) {
         const cart = Store.get('niledrip_cart', []);
-        const size = (product.sizes && product.sizes[0]) || 'M';
+        const size = 'M';
 
         const existing = cart.find(i => i.id === product.id && i.size === size);
 
@@ -56,18 +56,57 @@
         return copy;
     }
 
+    function updateCompareButton() {
+        if (!openCompareBtn) return;
+        openCompareBtn.textContent = `Compare (${compareIds.size})`;
+        openCompareBtn.disabled = compareIds.size < 2;
+    }
+
+    function renderCompareTable() {
+        if (!compareTableWrap) return;
+
+        const products = getProducts().filter(p => compareIds.has(p.id));
+
+        if (products.length < 2) {
+            compareTableWrap.innerHTML = "<p>Select at least 2 products to compare.</p>";
+            return;
+        }
+
+        compareTableWrap.innerHTML = `
+            <table class="compare-table">
+                <tr>
+                    <th>Field</th>
+                    ${products.map(p => `<th>${p.name}</th>`).join('')}
+                </tr>
+                <tr>
+                    <td>Price</td>
+                    ${products.map(p => `<td>${p.price} EGP</td>`).join('')}
+                </tr>
+                <tr>
+                    <td>Category</td>
+                    ${products.map(p => `<td>${p.category}</td>`).join('')}
+                </tr>
+                <tr>
+                    <td>Stock</td>
+                    ${products.map(p => `<td>${p.stock || 0}</td>`).join('')}
+                </tr>
+            </table>
+        `;
+    }
+
     function renderProducts() {
         if (!grid) return;
 
+        let products = getProducts();
         const { categories, brands, maxPrice } = getFilters();
         const sortVal = sortEl ? sortEl.value : 'newest';
-        let products = getProducts();
 
         if (categories.length) products = products.filter(p => categories.includes(p.category));
         if (brands.length) products = products.filter(p => brands.includes(p.brand));
         products = products.filter(p => p.price <= maxPrice);
 
         products = applySort(products, sortVal);
+
         grid.innerHTML = '';
 
         if (products.length === 0) {
@@ -85,31 +124,26 @@
             const card = document.createElement('article');
             card.className = 'product-card';
 
-            // ✅ FIXED GITHUB PAGES SAFE LINK
-            const link = `product.html?id=${p.id}`;
+            // ✅ FIXED GITHUB PAGES LINK
+            const link = `./product.html?id=${p.id}`;
 
             card.innerHTML = `
                 <a href="${link}" class="product-image-link">
-                    <img src="${p.image}" alt="${p.name}"
-                         onerror="this.src='https://via.placeholder.com/300x360?text=No+Image'">
+                    <img src="${p.image}" alt="${p.name}">
                 </a>
 
                 <div class="card-info">
                     <h3>${p.name}</h3>
                     <p>${p.price} EGP</p>
 
-                    <div class="shop-card-actions">
-                        <button class="btn btn-primary shop-add-cart" data-id="${p.id}">
-                            Add
-                        </button>
-                    </div>
+                    <button class="btn btn-primary shop-add-cart" data-id="${p.id}">
+                        Add
+                    </button>
 
-                    <div class="shop-card-actions">
-                        <button class="btn ${selected ? 'btn-primary' : 'btn-secondary'} shop-compare"
-                                data-id="${p.id}">
-                            ${selected ? 'Selected' : 'Compare'}
-                        </button>
-                    </div>
+                    <button class="btn ${selected ? 'btn-primary' : 'btn-secondary'} shop-compare"
+                        data-id="${p.id}">
+                        ${selected ? 'Selected' : 'Compare'}
+                    </button>
                 </div>
             `;
 
@@ -117,12 +151,14 @@
         });
     }
 
+    // =====================
+    // EVENTS
+    // =====================
     document.addEventListener('click', e => {
         const addBtn = e.target.closest('.shop-add-cart');
         if (addBtn) {
             const product = getProducts().find(p => p.id === addBtn.dataset.id);
             if (product) addToCartFromShop(product);
-            return;
         }
 
         const compareBtn = e.target.closest('.shop-compare');
@@ -135,8 +171,17 @@
                 compareIds.add(id);
             }
 
+            updateCompareButton();
             renderProducts();
-            return;
+        }
+
+        if (e.target.id === 'openCompareBtn') {
+            renderCompareTable();
+            if (compareModal) compareModal.style.display = 'flex';
+        }
+
+        if (e.target.id === 'closeCompareModal' || e.target.id === 'compareModal') {
+            if (compareModal) compareModal.style.display = 'none';
         }
     });
 
@@ -166,5 +211,6 @@
         });
     }
 
+    updateCompareButton();
     renderProducts();
 })();
