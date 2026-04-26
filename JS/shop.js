@@ -1,128 +1,215 @@
-const mockProducts = [
-    { id: 1, name: 'Premium Oversized Hoodie', category: 'hoodies', brand: 'brand1', price: 550, image: '../assets/images/product-1.jpg' },
-    { id: 2, name: 'Classic Logo Tee', category: 'tees', brand: 'brand2', price: 250, image: '../assets/images/product-2.jpg' },
-    { id: 3, name: 'Joggers Combo', category: 'sweatpants', brand: 'brand3', price: 450, image: '../assets/images/product-3.jpg' },
-    { id: 4, name: 'Desert Cap', category: 'accessories', brand: 'brand4', price: 150, image: '../assets/images/product-4.jpg' },
-    { id: 5, name: 'Oversized Windbreaker', category: 'hoodies', brand: 'brand1', price: 650, image: '../assets/images/product-5.jpg' },
-    { id: 6, name: 'Minimalist Tee', category: 'tees', brand: 'brand3', price: 200, image: '../assets/images/product-6.jpg' },
-    { id: 7, name: 'Track Pants', category: 'sweatpants', brand: 'brand2', price: 400, image: '../assets/images/product-7.jpg' },
-    { id: 8, name: 'Cotton Socks Set', category: 'accessories', brand: 'brand1', price: 100, image: '../assets/images/product-8.jpg' },
-    { id: 9, name: 'Vintage Hoodie', category: 'hoodies', brand: 'brand4', price: 500, image: '../assets/images/product-9.jpg' },
-    { id: 10, name: 'Blank Canvas Tee', category: 'tees', brand: 'brand1', price: 220, image: '../assets/images/product-10.jpg' },
-    { id: 11, name: 'Premium Sweatpants', category: 'sweatpants', brand: 'brand3', price: 480, image: '../assets/images/product-11.jpg' },
-    { id: 12, name: 'Limited Edition Cap', category: 'accessories', brand: 'brand2', price: 180, image: '../assets/images/product-12.jpg' }
-];
+// shop.js
 
-const productsGrid = document.getElementById('productsGrid');
-
-if (productsGrid) {
-    const categoryFilters = document.querySelectorAll('.category-filter');
-    const brandFilters = document.querySelectorAll('.brand-filter');
+(function () {
+    const grid = document.getElementById('productsGrid');
+    const noProducts = document.getElementById('noProducts');
+    const countEl = document.getElementById('productCount');
+    const sortEl = document.getElementById('sortBy');
     const priceRange = document.getElementById('priceRange');
     const priceValue = document.getElementById('priceValue');
-    const resetFiltersBtn = document.getElementById('resetFilters');
-    const sortSelect = document.getElementById('sortBy');
-    const productCount = document.getElementById('productCount');
-    const noProducts = document.getElementById('noProducts');
+    const resetBtn = document.getElementById('resetFilters');
+    const openCompareBtn = document.getElementById('openCompareBtn');
+    const compareModal = document.getElementById('compareModal');
+    const closeCompareModal = document.getElementById('closeCompareModal');
+    const compareTableWrap = document.getElementById('compareTableWrap');
 
-    const renderProducts = (products) => {
-        productsGrid.innerHTML = '';
+    const compareIds = new Set();
 
-        if (products.length === 0) {
-            if(noProducts) noProducts.style.display = 'block';
-            if(productCount) productCount.textContent = '0';
+    function getProducts() {
+        return Store.get('niledrip_products', []);
+    }
+
+    function addToCartFromShop(product) {
+        const cart = Store.get('niledrip_cart', []);
+        const size = (product.sizes && product.sizes[0]) || 'M';
+        const existing = cart.find(i => i.id === product.id && i.size === size);
+        if (existing) {
+            existing.quantity += 1;
+        } else {
+            cart.push({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                image: product.image,
+                size,
+                quantity: 1
+            });
+        }
+        Store.set('niledrip_cart', cart);
+        if (typeof updateCartBadge === 'function') updateCartBadge();
+        alert('Added to cart');
+    }
+
+    function getFilters() {
+        const categories = [...document.querySelectorAll('.category-filter:checked')].map(el => el.value);
+        const brands = [...document.querySelectorAll('.brand-filter:checked')].map(el => el.value);
+        const maxPrice = priceRange ? +priceRange.value : 99999;
+        return { categories, brands, maxPrice };
+    }
+
+    function applySort(list, sortVal) {
+        const copy = [...list];
+        if (sortVal === 'price-low') return copy.sort((a, b) => a.price - b.price);
+        if (sortVal === 'price-high') return copy.sort((a, b) => b.price - a.price);
+        if (sortVal === 'popular') return copy.sort((a, b) => (b.sales || 0) - (a.sales || 0));
+        return copy;
+    }
+
+    function renderCompareTable() {
+        if (!compareTableWrap) return;
+        const products = getProducts().filter(p => compareIds.has(p.id));
+        if (products.length < 2) {
+            compareTableWrap.innerHTML = '<p>Select at least 2 products to compare.</p>';
             return;
         }
 
-        if(noProducts) noProducts.style.display = 'none';
-        if(productCount) productCount.textContent = products.length;
+        const cols = products.map(p => `
+            <th>
+                <div class="compare-col-head">
+                    <img src="${p.image}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/80x80?text=No+Image'">
+                    <span>${p.name}</span>
+                </div>
+            </th>
+        `).join('');
 
-        products.forEach(product => {
-            const card = document.createElement('a');
-            card.href = 'Product.html'; // Matches capitalized filename
+        const row = (label, pick) => `
+            <tr>
+                <td>${label}</td>
+                ${products.map(p => `<td>${pick(p)}</td>`).join('')}
+            </tr>
+        `;
+
+        compareTableWrap.innerHTML = `
+            <table class="compare-table">
+                <thead><tr><th>Field</th>${cols}</tr></thead>
+                <tbody>
+                    ${row('Price', p => `${p.price} EGP`)}
+                    ${row('Category', p => p.category || '-')}
+                    ${row('Brand', p => p.brand || '-')}
+                    ${row('Stock', p => `${p.stock || 0}`)}
+                </tbody>
+            </table>
+        `;
+    }
+
+    function updateCompareButton() {
+        if (!openCompareBtn) return;
+        const count = compareIds.size;
+        openCompareBtn.textContent = `Compare (${count})`;
+        openCompareBtn.disabled = count < 2;
+    }
+
+    function renderProducts() {
+        if (!grid) return;
+
+        const { categories, brands, maxPrice } = getFilters();
+        const sortVal = sortEl ? sortEl.value : 'newest';
+        let products = getProducts();
+
+        if (categories.length) products = products.filter(p => categories.includes(p.category));
+        if (brands.length) products = products.filter(p => brands.includes(p.brand));
+        products = products.filter(p => p.price <= maxPrice);
+
+        products = applySort(products, sortVal);
+        grid.innerHTML = '';
+
+        if (products.length === 0) {
+            if (noProducts) noProducts.style.display = 'block';
+            if (countEl) countEl.textContent = '0';
+            return;
+        }
+
+        if (noProducts) noProducts.style.display = 'none';
+        if (countEl) countEl.textContent = products.length;
+
+        products.forEach(p => {
+            const selectedForCompare = compareIds.has(p.id);
+            const card = document.createElement('article');
             card.className = 'product-card';
             card.innerHTML = `
-                <div class="product-image">
-                    <img src="${product.image}" alt="${product.name}">
-                </div>
-                <div class="product-info">
-                    <div class="product-brand">${product.brand}</div>
-                    <div class="product-name">${product.name}</div>
-                    <div class="product-rating">★★★★★ (24)</div>
-                    <div class="product-price">${product.price} EGP</div>
+                <a href="product.html?id=${p.id}" class="product-image-link">
+                    <img src="${p.image}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300x360?text=No+Image'">
+                </a>
+                <div class="card-info">
+                    <h3>${p.name}</h3>
+                    <p>${p.price} EGP</p>
+                    <div class="shop-card-actions">
+                        <button class="btn btn-primary shop-add-cart" data-id="${p.id}">Add</button>
+                    </div>
+                    <div class="shop-card-actions">
+                        <button class="btn ${selectedForCompare ? 'btn-primary' : 'btn-secondary'} shop-compare" data-id="${p.id}">
+                            ${selectedForCompare ? 'Selected' : 'Compare'}
+                        </button>
+                    </div>
                 </div>
             `;
-            productsGrid.appendChild(card);
+            grid.appendChild(card);
         });
-    };
+    }
 
-    const filterProducts = () => {
-        let filtered = [...mockProducts];
-
-        const activeCategories = Array.from(categoryFilters)
-            .filter(cb => cb.checked)
-            .map(cb => cb.value);
-
-        if (activeCategories.length > 0) {
-            filtered = filtered.filter(p => activeCategories.includes(p.category));
+    document.addEventListener('click', e => {
+        const addBtn = e.target.closest('.shop-add-cart');
+        if (addBtn) {
+            const product = getProducts().find(p => p.id === addBtn.dataset.id);
+            if (product) addToCartFromShop(product);
+            return;
         }
 
-        const activeBrands = Array.from(brandFilters)
-            .filter(cb => cb.checked)
-            .map(cb => cb.value);
-
-        if (activeBrands.length > 0) {
-            filtered = filtered.filter(p => activeBrands.includes(p.brand));
+        const compareBtn = e.target.closest('.shop-compare');
+        if (compareBtn) {
+            const id = compareBtn.dataset.id;
+            if (compareIds.has(id)) {
+                compareIds.delete(id);
+            } else {
+                if (compareIds.size >= 4) {
+                    alert('You can compare up to 4 products.');
+                    return;
+                }
+                compareIds.add(id);
+            }
+            updateCompareButton();
+            renderProducts();
+            return;
         }
 
-        if (priceRange) {
-            const maxPrice = parseInt(priceRange.value);
-            filtered = filtered.filter(p => p.price <= maxPrice);
+        if (e.target.id === 'openCompareBtn') {
+            renderCompareTable();
+            if (compareModal) compareModal.style.display = 'flex';
+            return;
         }
 
-        const sortValue = sortSelect ? sortSelect.value : 'newest';
-        if (sortValue === 'price-low') filtered.sort((a, b) => a.price - b.price);
-        if (sortValue === 'price-high') filtered.sort((a, b) => b.price - a.price);
+        if (e.target.id === 'closeCompareModal' || e.target.id === 'compareModal') {
+            if (compareModal) compareModal.style.display = 'none';
+        }
+    });
 
-        renderProducts(filtered);
-    };
+    document.querySelectorAll('.category-filter, .brand-filter').forEach(el => {
+        el.addEventListener('change', renderProducts);
+    });
 
-    // Listeners
-    categoryFilters.forEach(filter => filter.addEventListener('change', filterProducts));
-    brandFilters.forEach(filter => filter.addEventListener('change', filterProducts));
     if (priceRange) {
         priceRange.addEventListener('input', () => {
-            if(priceValue) priceValue.textContent = priceRange.value;
-            filterProducts();
+            if (priceValue) priceValue.textContent = priceRange.value;
+            renderProducts();
         });
     }
-    if (sortSelect) sortSelect.addEventListener('change', filterProducts);
-    if (resetFiltersBtn) {
-        resetFiltersBtn.addEventListener('click', () => {
-            categoryFilters.forEach(cb => cb.checked = false);
-            brandFilters.forEach(cb => cb.checked = false);
-            if(priceRange) {
+
+    if (sortEl) sortEl.addEventListener('change', renderProducts);
+
+    if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+            document.querySelectorAll('.category-filter, .brand-filter').forEach(el => {
+                el.checked = false;
+            });
+            if (priceRange) {
                 priceRange.value = 1000;
-                if(priceValue) priceValue.textContent = 1000;
+                if (priceValue) priceValue.textContent = '1000';
             }
-            filterProducts();
+            if (sortEl) sortEl.value = 'newest';
+            renderProducts();
         });
     }
 
-    // --- URL CATEGORY LISTENER ---
-    // This part checks the address bar (e.g., ?category=hoodies)
-    const urlParams = new URLSearchParams(window.location.search);
-    const categoryFromUrl = urlParams.get('category');
-
-    if (categoryFromUrl) {
-        const targetCheckbox = document.querySelector(`.category-filter[value="${categoryFromUrl}"]`);
-        if (targetCheckbox) {
-            targetCheckbox.checked = true;
-            filterProducts(); // Only show the category from the homepage
-        } else {
-            renderProducts(mockProducts); // Fallback to all if category doesn't exist
-        }
-    } else {
-        renderProducts(mockProducts); // Default load
-    }
-}
+    updateCompareButton();
+    renderProducts();
+})();

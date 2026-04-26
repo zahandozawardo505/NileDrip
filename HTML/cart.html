@@ -8,138 +8,126 @@
     <link rel="stylesheet" href="../CSS/style-cart.css">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container">
-            <div class="navbar-brand">
-                <a href="../index.html" class="logo">
-                    <span class="nile">NILE</span><span class="drip">DRIP</span>
-                </a>
-            </div>
-            <div class="navbar-menu" id="navbarMenu">
-                <a href="shop.html" class="nav-link">Shop</a>
-                <a href="cart.html" class="nav-link active">Cart</a>
-                <a href="login.html" class="nav-link">Login</a>
-                <a href="signup.html" class="nav-link">Sign Up</a>
-            </div>
-            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="5"></circle>
-                    <line x1="12" y1="1" x2="12" y2="3"></line>
-                    <line x1="12" y1="21" x2="12" y2="23"></line>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                    <line x1="1" y1="12" x2="3" y2="12"></line>
-                    <line x1="21" y1="12" x2="23" y2="12"></line>
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                </svg>
-            </button>
-            <button class="hamburger" id="hamburger">
-                <span></span><span></span><span></span>
-            </button>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="container">
+        <div class="navbar-brand">
+            <a href="../index.html" class="logo">
+                <span class="nile">NILE</span><span class="drip">DRIP</span>
+            </a>
         </div>
-    </nav>
 
-    <section class="cart-header">
-        <div class="container">
-            <h1>Your Cart <span class="cart-count-badge" id="cartCountBadge">0</span></h1>
-            <p>Review your items before checkout</p>
+        <div class="navbar-menu" id="navbarMenu">
+            <a href="shop.html" class="nav-link">Shop</a>
+            <a href="cart.html" class="nav-link active">Cart</a>
+            <a href="login.html" class="nav-link">Login</a>
+            <a href="signup.html" class="nav-link">Sign Up</a>
         </div>
-    </section>
 
-    <section class="cart-section">
-        <div class="container">
+       
 
-            <!-- Empty Cart State -->
-            <div class="cart-empty" id="cartEmpty" style="display: none;">
-                <div class="cart-empty-icon">🛒</div>
-                <h2>Your cart is empty</h2>
-                <p>Looks like you haven't added anything yet.</p>
-                <a href="shop.html" class="btn btn-primary btn-large">Start Shopping</a>
-            </div>
+        <button class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
 
-            <!-- Cart Layout -->
-            <div class="cart-layout" id="cartLayout">
-                <div class="cart-items" id="cartItems">
-                    <!-- Items injected by JS -->
+<!-- HEADER -->
+<section class="cart-header">
+    <div class="container">
+        <h1>Your Cart</h1>
+        <p>Review your items before checkout</p>
+    </div>
+</section>
+
+<!-- CART SECTION -->
+<section class="cart-section">
+    <div class="container">
+
+        <!-- EMPTY CART -->
+        <div id="cartEmpty" class="cart-empty" style="display:none;">
+            <h2>Your cart is empty 🛒</h2>
+            <a href="shop.html" class="btn btn-primary">Go Shopping</a>
+        </div>
+
+        <!-- CART LAYOUT -->
+        <div id="cartLayout" class="cart-layout">
+
+            <!-- ITEMS -->
+            <div id="cartItems" class="cart-items"></div>
+
+            <!-- SUMMARY -->
+            <aside class="cart-summary">
+                <h3>Order Summary</h3>
+
+                <p>Items: <span id="summaryItemCount">0</span></p>
+                <p>Subtotal: <span id="summarySubtotal">0 EGP</span></p>
+                <p>Shipping: 50 EGP</p>
+                <p>Estimated Delivery: <span id="estimatedDelivery">-</span></p>
+                <div class="shipping-progress-wrap">
+                    <div class="shipping-progress-track">
+                        <div id="shippingProgressBar" class="shipping-progress-bar"></div>
+                    </div>
+                    <small id="shippingProgressText">Add items to unlock free shipping</small>
                 </div>
 
-                <aside class="cart-summary">
-                    <h3 class="summary-title">Order Summary</h3>
+                <!-- PROMO -->
+                <div class="promo-row">
+                    <input id="promoInput" placeholder="Promo code">
+                    <button id="applyPromo" class="btn btn-secondary">Apply</button>
+                </div>
 
-                    <div class="summary-row">
-                        <span>Subtotal (<span id="summaryItemCount">0</span> items)</span>
-                        <span id="summarySubtotal">0 EGP</span>
-                    </div>
-                    <div class="summary-row">
-                        <span>Shipping</span>
-                        <span id="summaryShipping">50 EGP</span>
-                    </div>
-                    <div class="summary-row promo-row">
-                        <input type="text" id="promoInput" placeholder="Promo code" class="promo-input">
-                        <button class="btn btn-secondary btn-small" id="applyPromo">Apply</button>
-                    </div>
-                    <div class="summary-row promo-applied" id="promoApplied" style="display: none;">
-                        <span>Discount (DEMO10)</span>
-                        <span id="promoDiscount" class="discount-value">-0 EGP</span>
-                    </div>
-                    <div class="summary-divider"></div>
-                    <div class="summary-row summary-total">
-                        <span>Total</span>
-                        <span id="summaryTotal">0 EGP</span>
-                    </div>
+                <div id="promoApplied" style="display:none;">
+                    Discount: <span id="promoDiscount">0</span>
+                </div>
 
-                    <button class="btn btn-primary btn-block btn-checkout" id="checkoutBtn">
-                        Proceed to Checkout
-                    </button>
-                    <p class="demo-notice">This is a demo — checkout is not functional yet.</p>
+                <hr>
 
-                    <a href="shop.html" class="continue-shopping">← Continue Shopping</a>
-                </aside>
-            </div>
+                <h3>Total: <span id="summaryTotal">0 EGP</span></h3>
+                <div class="cart-note-box">
+                    <label for="cartNote">Order note</label>
+                    <textarea id="cartNote" rows="3" placeholder="Any delivery notes?"></textarea>
+                </div>
 
-        </div>
-    </section>
-
-    <!-- Checkout Modal -->
-    <div class="modal-overlay" id="checkoutModal" style="display: none;">
-        <div class="modal">
-            <button class="modal-close" id="closeModal">&#x2715;</button>
-            <div class="modal-icon">🎉</div>
-            <h2>Order Placed! (Demo)</h2>
-            <p>This is a demo checkout. In the real version your order would be confirmed here.</p>
-            <p class="modal-order-id">Order #ND-<span id="modalOrderId"></span></p>
-            <button class="btn btn-primary btn-block" id="clearCartBtn">Clear Cart &amp; Continue</button>
+                <!-- FIX: Removed duplicate id="clearCartBtn" — only one exists here -->
+                <button id="checkoutBtn" class="btn btn-primary">Checkout</button>
+                <button id="clearCartBtn" class="btn btn-danger">Clear Cart</button>
+            </aside>
         </div>
     </div>
+</section>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>About NileDrip</h4>
-                    <p>Supporting local Egyptian fashion brands with zero middleman</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="shop.html">Shop</a></li>
-                        <li><a href="seller-signup.html">Become a Seller</a></li>
-                        <li><a href="login.html">Login</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Contact</h4>
-                    <p>Email: hello@niledrip.com<br>Cairo, Egypt</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 NileDrip. All rights reserved.</p>
-            </div>
+<!-- CHECKOUT MODAL -->
+<div id="checkoutModal" aria-hidden="true" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; align-items: center; justify-content: center;">
+    <div class="modal-content" style="background: var(--bg-primary, #fff); border-radius: 16px; padding: 40px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
+        <h2 style="margin-bottom: 16px; color: #FF006E;">Confirm Order</h2>
+        <p style="margin-bottom: 24px; color: #666;">Order ID: <span id="modalOrderId"></span></p>
+        <div class="modal-actions">
+            <button id="cancelCheckoutBtn" type="button" class="btn btn-secondary">Cancel</button>
+            <button id="confirmOrderBtn" type="button" class="btn btn-primary">Confirm</button>
         </div>
-    </footer>
+    </div>
+</div>
 
-    <script src="../JS/theme-menu.js"></script>
-    <script src="../JS/cart.js"></script>
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <p>© 2026 NileDrip</p>
+    </div>
+</footer>
+
+<div id="undoRemoveBar" class="undo-remove-bar" style="display:none;">
+    <span id="undoRemoveText">Item removed</span>
+    <button id="undoRemoveBtn" class="btn btn-secondary">Undo</button>
+</div>
+
+<!-- FIX: Correct script filenames (original had app-data.js, app-cart.js, app-ui.js which don't exist) -->
+<script src="../JS/store.js"></script>
+<script src="../JS/db.js"></script>
+<script src="../JS/utils.js"></script>
+<script src="../JS/cart.js"></script>
+<script src="../JS/theme.js"></script>
+
 </body>
 </html>

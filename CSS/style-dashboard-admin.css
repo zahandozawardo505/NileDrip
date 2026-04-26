@@ -680,3 +680,167 @@ tr:hover {
     font-weight: 600;
     cursor: pointer;
 }
+
+/* Seller edit-product modal follows active theme (light/dark) */
+.edit-product-modal {
+    position: fixed;
+    z-index: 2000;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    overflow-y: auto;
+}
+
+.edit-product-modal-content {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    margin: 5% auto;
+    padding: 30px;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 12px;
+    position: relative;
+    border: 1px solid var(--border-color);
+}
+
+.edit-modal-title {
+    margin-bottom: 20px;
+}
+
+.edit-modal-group {
+    margin-bottom: 15px;
+}
+
+.edit-modal-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.edit-modal-col {
+    flex: 1;
+}
+
+.edit-modal-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+.edit-modal-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.edit-modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.edit-modal-btn {
+    flex: 1;
+}
+
+.inventory-tools {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 14px;
+}
+
+.inventory-tools-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 10px;
+}
+
+.inventory-tools-row input {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    padding: 9px 10px;
+}
+
+.low-stock-badge {
+    display: inline-block;
+    margin-top: 4px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(255, 0, 110, 0.14);
+    color: var(--primary-color);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.select-product-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+}
+
+.charts-grid {
+    margin-top: var(--spacing-lg);
+}
+
+.mini-chart {
+    height: 160px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    align-items: end;
+}
+
+.mini-bar {
+    height: 100%;
+    display: flex;
+    align-items: end;
+}
+
+.mini-bar span {
+    width: 100%;
+    border-radius: 8px 8px 0 0;
+    background: linear-gradient(180deg, var(--secondary-color), var(--primary-color));
+}
+
+.coupon-form {
+    display: grid;
+    grid-template-columns: 1fr 120px auto;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.coupon-form input {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    padding: 9px 10px;
+}
+
+.coupon-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.coupon-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-primary);
+    padding: 8px 10px;
+}
+
+.coupon-item-actions {
+    display: flex;
+    gap: 6px;
+}

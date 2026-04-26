@@ -1,34 +1,27 @@
-// ============================================
-// FORM VALIDATION UTILITIES
-// ============================================
+// utils.js
+const validateEmail = email =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-const validateEmail = (email) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+const validatePassword = pass =>
+    pass.length >= 8;
+
+const getPasswordStrength = pass => {
+    let s = 0;
+    if (pass.length >= 8) s++;
+    if (/[a-z]/.test(pass) && /[A-Z]/.test(pass)) s++;
+    if (/\d/.test(pass)) s++;
+    if (/[^A-Za-z0-9]/.test(pass)) s++;
+    return s;
 };
 
-const validatePassword = (password) => {
-    return password.length >= 8;
+const showError = (el, msg) => {
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.add('show');
 };
 
-const getPasswordStrength = (password) => {
-    let strength = 0;
-    if (password.length >= 8) strength += 1;
-    if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength += 1;
-    if (/\d/.test(password)) strength += 1;
-    if (/[^A-Za-z0-9]/.test(password)) strength += 1;
-    return strength;
-};
-
-const showError = (element, message) => {
-    if (element) {
-        element.textContent = message;
-        element.classList.add('show');
-    }
-};
-
-const clearError = (element) => {
-    if (element) {
-        element.textContent = '';
-        element.classList.remove('show');
-    }
+const clearError = el => {
+    if (!el) return;
+    el.textContent = '';
+    el.classList.remove('show');
 };

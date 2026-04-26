@@ -80,9 +80,9 @@ body {
 
 .navbar .container {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     padding: var(--spacing-md) var(--spacing-lg);
+    position: relative;
 }
 
 .navbar-brand {
@@ -112,6 +112,9 @@ body {
     display: flex;
     gap: var(--spacing-xl);
     align-items: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .nav-link {
@@ -153,6 +156,17 @@ body {
     color: var(--primary-color);
 }
 
+.wishlist-icon-btn {
+    margin-right: 0;
+}
+
+.navbar-actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
 .cart-nav-badge {
     position: absolute;
     top: -8px;
@@ -171,20 +185,38 @@ body {
     pointer-events: none;
 }
 
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Adjust spacing between icons */
+}
+
 .theme-toggle {
     background: none;
     border: none;
     cursor: pointer;
     color: var(--text-primary);
-    font-size: 20px;
-    transition: transform var(--transition-fast);
+    padding: 8px; /* Standardize with other buttons */
     display: flex;
     align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, color 0.2s ease;
+    border-radius: 50%;
 }
 
 .theme-toggle:hover {
-    transform: rotate(20deg);
+    transform: translateY(-2px);
+    color: var(--primary-color);
+    background-color: var(--bg-secondary); /* Optional: subtle highlight on hover */
 }
+
+/* Match SVG sizing exactly to your Cart/Wishlist icons */
+.theme-toggle svg {
+    width: 22px;
+    height: 22px;
+}
+
+
 
 .hamburger {
     display: none;
@@ -210,6 +242,9 @@ body {
 
     .navbar-menu {
         display: none;
+        position: static;
+        transform: none;
+        left: auto;
     }
 }
 /* button styles */

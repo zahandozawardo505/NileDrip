@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NileDrip | Seller Dashboard</title>
-    <link rel="stylesheet" href="..\CSS\style-base.css">
-    <link rel="stylesheet" href="..\CSS\style-dashboard-admin.css">
+    <link rel="stylesheet" href="../CSS/style-base.css">
+    <link rel="stylesheet" href="../CSS/style-dashboard-admin.css">
 </head>
 <body>
     <nav class="navbar">
@@ -169,10 +169,18 @@
 
                 <div class="dashboard-tab" id="products">
                     <h2>My Products</h2>
+                    <div class="inventory-tools">
+                        <p id="selectedProductsCount">0 selected</p>
+                        <div class="inventory-tools-row">
+                            <input type="number" id="bulkPriceDelta" placeholder="Price +/- (EGP)">
+                            <input type="number" id="bulkStockDelta" placeholder="Stock +/-">
+                            <button id="applyBulkUpdateBtn" class="btn btn-secondary">Apply Bulk Update</button>
+                        </div>
+                    </div>
                     <div class="products-list">
                         <div class="product-item">
                             <div class="product-image">
-                                <img src="img1.jpg" alt="Product">
+                                <img src="../assets/images/bmw.webp" alt="Product">
                             </div>
                             <div class="product-details-list">
                                 <h4>Premium Oversized Hoodie</h4>
@@ -186,7 +194,7 @@
                         </div>
                         <div class="product-item">
                             <div class="product-image">
-                                <img src="img2.jpg" alt="Product">
+                                <img src="../assets/images/bmw.webp" alt="Product">
                             </div>
                             <div class="product-details-list">
                                 <h4>Classic Logo Tee</h4>
@@ -312,23 +320,44 @@
                             <p class="secondary-text">Average platform rate: 2.8%</p>
                         </div>
                     </div>
+                    <div class="analytics-grid charts-grid">
+                        <div class="analytics-card">
+                            <h3>Weekly Sales</h3>
+                            <div id="salesChart" class="mini-chart"></div>
+                        </div>
+                        <div class="analytics-card">
+                            <h3>Traffic Trend</h3>
+                            <div id="trafficChart" class="mini-chart"></div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="dashboard-tab" id="settings">
                     <h2>Account Settings</h2>
-                    <div class="settings-form">
-                        <h3>Brand Information</h3>
-                        <form id="settingsForm">
-                            <div class="form-group">
-                                <label for="settingsBrandName">Brand Name</label>
-                                <input type="text" id="settingsBrandName" value="Raak Brand">
-                            </div>
-                            <div class="form-group">
-                                <label for="settingsBrandEmail">Brand Email</label>
-                                <input type="email" id="settingsBrandEmail" value="raak@brand.com">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Save Changes</button>
-                        </form>
+                    <div class="settings-grid">
+                        <div class="settings-form">
+                            <h3>Brand Information</h3>
+                            <form id="settingsForm">
+                                <div class="form-group">
+                                    <label for="settingsBrandName">Brand Name</label>
+                                    <input type="text" id="settingsBrandName" value="Raak Brand">
+                                </div>
+                                <div class="form-group">
+                                    <label for="settingsBrandEmail">Brand Email</label>
+                                    <input type="email" id="settingsBrandEmail" value="raak@brand.com">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+                        <div class="settings-form">
+                            <h3>Coupon Manager</h3>
+                            <form id="couponForm" class="coupon-form">
+                                <input type="text" id="couponCode" placeholder="Code (e.g. SPRING15)" required>
+                                <input type="number" id="couponDiscount" min="1" max="90" placeholder="Discount %" required>
+                                <button type="submit" class="btn btn-secondary">Add Coupon</button>
+                            </form>
+                            <div id="couponList" class="coupon-list"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -336,44 +365,52 @@
     </section>
 
    
-    <div id="editProductModal" class="modal-overlay" style="display:none; position:fixed; z-index:2000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.7); overflow-y:auto;">
-        <div class="modal-content" style="background: var(--bg-card, #fff); margin: 5% auto; padding: 30px; width: 90%; max-width: 500px; border-radius: 12px; position: relative;">
-            <h3 style="margin-bottom: 20px;">Edit Product</h3>
+    <div id="editProductModal" class="modal-overlay edit-product-modal" style="display:none;">
+        <div class="modal-content edit-product-modal-content">
+            <h3 class="edit-modal-title">Edit Product</h3>
             <form id="editProductForm">
                 <input type="hidden" id="editProductId">
-                <div class="form-group" style="margin-bottom: 15px;">
+                <div class="form-group edit-modal-group">
                     <label>Product Name</label>
-                    <input type="text" id="editProductName" class="form-control" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:5px;">
+                    <input type="text" id="editProductName" class="form-control edit-modal-input" required>
                 </div>
-                <div class="form-row" style="display:flex; gap:10px; margin-bottom:15px;">
-                    <div class="form-group" style="flex:1;">
+                <div class="form-row edit-modal-row">
+                    <div class="form-group edit-modal-group edit-modal-col">
                         <label>Price (EGP)</label>
-                        <input type="number" id="editProductPrice" step="0.01" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:5px;">
+                        <input type="number" id="editProductPrice" step="0.01" class="edit-modal-input" required>
                     </div>
-                    <div class="form-group" style="flex:1;">
+                    <div class="form-group edit-modal-group edit-modal-col">
                         <label>Stock</label>
-                        <input type="number" id="editProductStock" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:5px;">
+                        <input type="number" id="editProductStock" class="edit-modal-input" required>
                     </div>
                 </div>
-                <div class="form-group" style="margin-bottom: 15px;">
+                <div class="form-group edit-modal-group">
                     <label>Category</label>
-                    <select id="editProductCategory" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:5px;">
+                    <select id="editProductCategory" class="edit-modal-input">
                         <option value="hoodies">Hoodies</option>
                         <option value="tees">T-Shirts</option>
                         <option value="sweatpants">Sweatpants</option>
                         <option value="accessories">Accessories</option>
                     </select>
                 </div>
-                <div style="display: flex; gap: 10px; margin-top: 25px;">
-                    <button type="submit" class="btn btn-primary" style="flex:1;">Update Product</button>
-                    <button type="button" id="closeEditModal" class="btn btn-secondary" style="flex:1;">Cancel</button>
+                <div class="form-group edit-modal-group">
+                    <label>Image URL (optional)</label>
+                    <input type="text" id="editProductImage" class="edit-modal-input" placeholder="https://...">
+                </div>
+                <div class="edit-modal-actions">
+                    <button type="submit" class="btn btn-primary edit-modal-btn">Update Product</button>
+                    <button type="button" id="closeEditModal" class="btn btn-secondary edit-modal-btn">Cancel</button>
                 </div>
             </form>
         </div>
     </div>
-        <script src="../JS/theme-menu.js"></script>
-    <script src="../JS/utils.js"></script>
-    <script src="../JS/dashboard-seller.js"></script>
-    <script src="../JS/add-product.js"></script>
+<script src="../JS/store.js"></script>
+<script src="../JS/db.js"></script>
+<script src="../JS/utils.js"></script>
+
+<script src="../JS/dashboard-seller.js"></script>
+
+<script src="../JS/theme.js"></script>
+<script src="../JS/main.js"></script>
 </body>
 </html>
