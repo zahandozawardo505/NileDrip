@@ -125,7 +125,7 @@
             card.className = 'product-card';
 
             // ✅ FIXED GITHUB PAGES LINK
-            const link = `./product.html?id=${p.id}`;
+            const link = `./Product.html?id=${p.id}`;
 
             card.innerHTML = `
                 <a href="${link}" class="product-image-link">
