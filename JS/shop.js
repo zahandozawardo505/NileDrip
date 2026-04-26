@@ -1,5 +1,3 @@
-// shop.js
-
 (function () {
     const grid = document.getElementById('productsGrid');
     const noProducts = document.getElementById('noProducts');
@@ -22,7 +20,9 @@
     function addToCartFromShop(product) {
         const cart = Store.get('niledrip_cart', []);
         const size = (product.sizes && product.sizes[0]) || 'M';
+
         const existing = cart.find(i => i.id === product.id && i.size === size);
+
         if (existing) {
             existing.quantity += 1;
         } else {
@@ -35,8 +35,9 @@
                 quantity: 1
             });
         }
+
         Store.set('niledrip_cart', cart);
-        if (typeof updateCartBadge === 'function') updateCartBadge();
+        window.dispatchEvent(new Event('cartUpdated'));
         alert('Added to cart');
     }
 
@@ -53,50 +54,6 @@
         if (sortVal === 'price-high') return copy.sort((a, b) => b.price - a.price);
         if (sortVal === 'popular') return copy.sort((a, b) => (b.sales || 0) - (a.sales || 0));
         return copy;
-    }
-
-    function renderCompareTable() {
-        if (!compareTableWrap) return;
-        const products = getProducts().filter(p => compareIds.has(p.id));
-        if (products.length < 2) {
-            compareTableWrap.innerHTML = '<p>Select at least 2 products to compare.</p>';
-            return;
-        }
-
-        const cols = products.map(p => `
-            <th>
-                <div class="compare-col-head">
-                    <img src="${p.image}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/80x80?text=No+Image'">
-                    <span>${p.name}</span>
-                </div>
-            </th>
-        `).join('');
-
-        const row = (label, pick) => `
-            <tr>
-                <td>${label}</td>
-                ${products.map(p => `<td>${pick(p)}</td>`).join('')}
-            </tr>
-        `;
-
-        compareTableWrap.innerHTML = `
-            <table class="compare-table">
-                <thead><tr><th>Field</th>${cols}</tr></thead>
-                <tbody>
-                    ${row('Price', p => `${p.price} EGP`)}
-                    ${row('Category', p => p.category || '-')}
-                    ${row('Brand', p => p.brand || '-')}
-                    ${row('Stock', p => `${p.stock || 0}`)}
-                </tbody>
-            </table>
-        `;
-    }
-
-    function updateCompareButton() {
-        if (!openCompareBtn) return;
-        const count = compareIds.size;
-        openCompareBtn.textContent = `Compare (${count})`;
-        openCompareBtn.disabled = count < 2;
     }
 
     function renderProducts() {
@@ -123,26 +80,39 @@
         if (countEl) countEl.textContent = products.length;
 
         products.forEach(p => {
-            const selectedForCompare = compareIds.has(p.id);
+            const selected = compareIds.has(p.id);
+
             const card = document.createElement('article');
             card.className = 'product-card';
+
+            // ✅ FIXED GITHUB PAGES SAFE LINK
+            const link = `product.html?id=${p.id}`;
+
             card.innerHTML = `
-                <a href="product.html?id=${p.id}" class="product-image-link">
-                    <img src="${p.image}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300x360?text=No+Image'">
+                <a href="${link}" class="product-image-link">
+                    <img src="${p.image}" alt="${p.name}"
+                         onerror="this.src='https://via.placeholder.com/300x360?text=No+Image'">
                 </a>
+
                 <div class="card-info">
                     <h3>${p.name}</h3>
                     <p>${p.price} EGP</p>
+
                     <div class="shop-card-actions">
-                        <button class="btn btn-primary shop-add-cart" data-id="${p.id}">Add</button>
+                        <button class="btn btn-primary shop-add-cart" data-id="${p.id}">
+                            Add
+                        </button>
                     </div>
+
                     <div class="shop-card-actions">
-                        <button class="btn ${selectedForCompare ? 'btn-primary' : 'btn-secondary'} shop-compare" data-id="${p.id}">
-                            ${selectedForCompare ? 'Selected' : 'Compare'}
+                        <button class="btn ${selected ? 'btn-primary' : 'btn-secondary'} shop-compare"
+                                data-id="${p.id}">
+                            ${selected ? 'Selected' : 'Compare'}
                         </button>
                     </div>
                 </div>
             `;
+
             grid.appendChild(card);
         });
     }
@@ -158,28 +128,15 @@
         const compareBtn = e.target.closest('.shop-compare');
         if (compareBtn) {
             const id = compareBtn.dataset.id;
-            if (compareIds.has(id)) {
-                compareIds.delete(id);
-            } else {
-                if (compareIds.size >= 4) {
-                    alert('You can compare up to 4 products.');
-                    return;
-                }
+
+            if (compareIds.has(id)) compareIds.delete(id);
+            else {
+                if (compareIds.size >= 4) return alert('Max 4 products');
                 compareIds.add(id);
             }
-            updateCompareButton();
+
             renderProducts();
             return;
-        }
-
-        if (e.target.id === 'openCompareBtn') {
-            renderCompareTable();
-            if (compareModal) compareModal.style.display = 'flex';
-            return;
-        }
-
-        if (e.target.id === 'closeCompareModal' || e.target.id === 'compareModal') {
-            if (compareModal) compareModal.style.display = 'none';
         }
     });
 
@@ -198,18 +155,16 @@
 
     if (resetBtn) {
         resetBtn.addEventListener('click', () => {
-            document.querySelectorAll('.category-filter, .brand-filter').forEach(el => {
-                el.checked = false;
-            });
-            if (priceRange) {
-                priceRange.value = 1000;
-                if (priceValue) priceValue.textContent = '1000';
-            }
+            document.querySelectorAll('.category-filter, .brand-filter')
+                .forEach(el => el.checked = false);
+
+            if (priceRange) priceRange.value = 1000;
+            if (priceValue) priceValue.textContent = '1000';
             if (sortEl) sortEl.value = 'newest';
+
             renderProducts();
         });
     }
 
-    updateCompareButton();
     renderProducts();
 })();
