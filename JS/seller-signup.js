@@ -117,7 +117,25 @@
     form?.addEventListener('submit', e => {
         e.preventDefault();
         if (validateStep(currentStep)) {
-            // Save data logic (e.g., Store.push)
+            // Save data logic
+            const formData = new FormData(form);
+            const application = {
+                id: 'APP-' + Date.now(),
+                brandName: formData.get('brandName'),
+                brandDescription: formData.get('brandDescription'),
+                brandCategory: formData.get('brandCategory'),
+                ownerName: formData.get('ownerName'),
+                ownerPhone: formData.get('ownerPhone'),
+                sellerEmail: formData.get('sellerEmail'),
+                bankAccount: formData.get('bankAccount'),
+                appliedAt: new Date().toISOString(),
+                status: 'pending'
+            };
+
+            const apps = DB.applications;
+            apps.push(application);
+            DB.saveApplications(apps);
+
             showPopUp("Success!", ["Application submitted! We'll review it in 24-48h."], true);
             form.reset();
             currentStep = 1;

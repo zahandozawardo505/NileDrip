@@ -8,12 +8,11 @@
     <link rel="stylesheet" href="../CSS/style-sellersignup.css">
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
             <div class="navbar-brand">
                <a href="../index.html" class="logo">
-                    <span class="nile">NILE</span><span class="drip">DRIP</span>
+                    NILE<span class="drip">DRIP</span>
                 </a>
             </div>
             <div class="navbar-menu" id="navbarMenu">
@@ -21,22 +20,24 @@
                 <a href="login.html" class="nav-link">Login</a>
                 <a href="signup.html" class="nav-link">Sign Up</a>
             </div>
-            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="5"></circle>
-                    <line x1="12" y1="1" x2="12" y2="3"></line>
-                    <line x1="12" y1="21" x2="12" y2="23"></line>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                    <line x1="1" y1="12" x2="3" y2="12"></line>
-                    <line x1="21" y1="12" x2="23" y2="12"></line>
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                </svg>
-            </button>
-            <button class="hamburger" id="hamburger">
-                <span></span><span></span><span></span>
-            </button>
+            <div class="navbar-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                <button class="hamburger" id="hamburger">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -164,16 +165,16 @@
                         <div class="form-step" id="step3">
                             <h2 class="step-title">Almost done!</h2>
 
-                            <div class="form-group checkbox">
-                                <input type="checkbox" id="termsCheck" name="termsCheck" required>
-                                <label for="termsCheck">I agree to the <a href="#" class="auth-link">Seller Terms & Conditions</a> and understand my account will be verified</label>
-                                <span class="error-message" id="termsCheckError"></span>
-                            </div>
+                            <div class="checkbox-container">
+                                <div class="checkbox-card" onclick="document.getElementById('termsCheck').click()">
+                                    <input type="checkbox" id="termsCheck" name="termsCheck" required onclick="event.stopPropagation()">
+                                    <label for="termsCheck">I agree to the <a href="#" class="auth-link" onclick="event.stopPropagation()">Seller Terms & Conditions</a> and understand my account will be verified</label>
+                                </div>
 
-                            <div class="form-group checkbox">
-                                <input type="checkbox" id="authenticityCheck" name="authenticityCheck" required>
-                                <label for="authenticityCheck">I confirm that all information provided is accurate and my brand products are authentic</label>
-                                <span class="error-message" id="authenticityCheckError"></span>
+                                <div class="checkbox-card" onclick="document.getElementById('authenticityCheck').click()">
+                                    <input type="checkbox" id="authenticityCheck" name="authenticityCheck" required onclick="event.stopPropagation()">
+                                    <label for="authenticityCheck">I confirm that all information provided is accurate and my brand products are authentic</label>
+                                </div>
                             </div>
 
                             <div class="verification-info">

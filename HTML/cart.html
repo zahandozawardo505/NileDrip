@@ -14,7 +14,7 @@
     <div class="container">
         <div class="navbar-brand">
             <a href="../index.html" class="logo">
-                <span class="nile">NILE</span><span class="drip">DRIP</span>
+                NILE<span class="drip">DRIP</span>
             </a>
         </div>
 
@@ -25,11 +25,39 @@
             <a href="signup.html" class="nav-link">Sign Up</a>
         </div>
 
-       
-
-        <button class="hamburger" id="hamburger">
-            <span></span><span></span><span></span>
-        </button>
+        <div class="navbar-actions">
+            <a href="wishlist.html" class="cart-icon-btn wishlist-icon-btn" aria-label="Wishlist">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+            </a>
+            <a href="cart.html" class="cart-icon-btn" aria-label="Cart">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <span class="cart-nav-badge" id="cartNavBadge" style="display:none">0</span>
+            </a>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+            </button>
+            <button class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
     </div>
 </nav>
 
@@ -61,10 +89,23 @@
             <aside class="cart-summary">
                 <h3>Order Summary</h3>
 
-                <p>Items: <span id="summaryItemCount">0</span></p>
-                <p>Subtotal: <span id="summarySubtotal">0 EGP</span></p>
-                <p>Shipping: 50 EGP</p>
-                <p>Estimated Delivery: <span id="estimatedDelivery">-</span></p>
+                <div class="summary-row">
+                    <span>Items</span>
+                    <span id="summaryItemCount">0</span>
+                </div>
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="summarySubtotal">0 EGP</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping</span>
+                    <span>50 EGP</span>
+                </div>
+                <div class="summary-row">
+                    <span>Estimated Delivery</span>
+                    <span id="estimatedDelivery">-</span>
+                </div>
+                
                 <div class="shipping-progress-wrap">
                     <div class="shipping-progress-track">
                         <div id="shippingProgressBar" class="shipping-progress-bar"></div>
@@ -74,25 +115,31 @@
 
                 <!-- PROMO -->
                 <div class="promo-row">
-                    <input id="promoInput" placeholder="Promo code">
+                    <input id="promoInput" placeholder="Promo code" class="promo-input">
                     <button id="applyPromo" class="btn btn-secondary">Apply</button>
                 </div>
 
-                <div id="promoApplied" style="display:none;">
-                    Discount: <span id="promoDiscount">0</span>
+                <div id="promoApplied" class="summary-row" style="display:none;">
+                    <span>Discount</span>
+                    <span id="promoDiscount" class="discount-value">0</span>
                 </div>
 
-                <hr>
+                <div class="summary-divider"></div>
 
-                <h3>Total: <span id="summaryTotal">0 EGP</span></h3>
+                <div class="summary-row total-row">
+                    <h3>Total</h3>
+                    <h3 id="summaryTotal">0 EGP</h3>
+                </div>
+
                 <div class="cart-note-box">
                     <label for="cartNote">Order note</label>
                     <textarea id="cartNote" rows="3" placeholder="Any delivery notes?"></textarea>
                 </div>
 
-                <!-- FIX: Removed duplicate id="clearCartBtn" — only one exists here -->
-                <button id="checkoutBtn" class="btn btn-primary">Checkout</button>
-                <button id="clearCartBtn" class="btn btn-danger">Clear Cart</button>
+                <div class="summary-actions">
+                    <button id="checkoutBtn" class="btn btn-primary btn-block">Checkout</button>
+                    <button id="clearCartBtn" class="btn btn-danger btn-block">Clear Cart</button>
+                </div>
             </aside>
         </div>
     </div>

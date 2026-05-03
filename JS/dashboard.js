@@ -1,42 +1,4 @@
 // dashboard.js  (Admin panel)
-// No logic changes — original was well-structured.
-// Minor: wrapped StorageManager in IIFE to avoid polluting global scope.
-
-const StorageManager = {
-    getUsers() {
-        const u = localStorage.getItem('niledrip_users');
-        return u ? JSON.parse(u) : this.getDefaultUsers();
-    },
-    getSellers() {
-        const s = localStorage.getItem('niledrip_sellers');
-        return s ? JSON.parse(s) : this.getDefaultSellers();
-    },
-    saveUsers(users)     { localStorage.setItem('niledrip_users',   JSON.stringify(users)); },
-    saveSellers(sellers) { localStorage.setItem('niledrip_sellers', JSON.stringify(sellers)); },
-
-    getDefaultUsers() {
-        return [
-            { id: 'U001', name: 'Ahmed Hassan',    email: 'ahmed@email.com',    joinDate: 'Dec 1, 2024',  orders: 5,  status: 'active' },
-            { id: 'U002', name: 'Fatima Ali',      email: 'fatima@email.com',   joinDate: 'Dec 5, 2024',  orders: 12, status: 'active' },
-            { id: 'U003', name: 'Mohammed Ahmed',  email: 'mohammed@email.com', joinDate: 'Nov 15, 2024', orders: 8,  status: 'active' },
-            { id: 'U004', name: 'Sara Mohammed',   email: 'sara@email.com',     joinDate: 'Nov 20, 2024', orders: 15, status: 'active' }
-        ];
-    },
-    getDefaultSellers() {
-        return [
-            { id: 'S001', brandName: 'Raak Brand',     owner: 'Mohamed Ahmed', products: 24, revenue: '125,500 EGP', rating: '★★★★★ (342)', status: 'verified' },
-            { id: 'S002', brandName: 'Urban Cairo',    owner: 'Sara Mohammed', products: 18, revenue: '89,200 EGP',  rating: '★★★★☆ (215)', status: 'verified' },
-            { id: 'S003', brandName: 'Desert Threads', owner: 'Karim Hassan',  products: 12, revenue: '45,300 EGP',  rating: '★★★★☆ (98)',  status: 'pending'  },
-            { id: 'S004', brandName: 'Fashion Hub',    owner: 'Laila Ahmed',   products: 30, revenue: '180,000 EGP', rating: '★★★★★ (512)', status: 'verified' }
-        ];
-    },
-    initialize() {
-        if (!localStorage.getItem('niledrip_users'))   this.saveUsers(this.getDefaultUsers());
-        if (!localStorage.getItem('niledrip_sellers')) this.saveSellers(this.getDefaultSellers());
-    }
-};
-
-StorageManager.initialize();
 
 document.addEventListener('DOMContentLoaded', function () {
     const navLinks = document.querySelectorAll('[data-tab]');
@@ -44,7 +6,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (!navLinks.length || !tabs.length) return;
 
-    setTimeout(() => { loadUsersTable(); loadSellersTable(); }, 100);
+    // Initial Load
+    loadUsersTable();
+    loadSellersTable();
+    loadVerificationQueue();
 
     // ── TAB SWITCHING ──────────────────────────────────────────────────────
     navLinks.forEach(link => {
@@ -61,8 +26,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 tab.style.display = isActive ? 'block' : 'none';
             });
 
-            if (tabId === 'users')   setTimeout(loadUsersTable,   50);
-            if (tabId === 'sellers') setTimeout(loadSellersTable, 50);
+            if (tabId === 'users') loadUsersTable();
+            if (tabId === 'sellers') loadSellersTable();
+            if (tabId === 'verification') loadVerificationQueue();
         });
     });
 
@@ -72,22 +38,8 @@ document.addEventListener('DOMContentLoaded', function () {
         logoutBtn.addEventListener('click', e => {
             e.preventDefault();
             if (confirm('Are you sure you want to logout?')) {
-                sessionStorage.clear();
-                localStorage.removeItem('adminToken');
                 window.location.href = '../index.html';
             }
-        });
-    }
-
-    // ── THEME ──────────────────────────────────────────────────────────────
-    const themeToggle = document.getElementById('themeToggle');
-    if (themeToggle) {
-        const saved = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', saved);
-        themeToggle.addEventListener('click', function () {
-            const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-            document.documentElement.setAttribute('data-theme', next);
-            localStorage.setItem('theme', next);
         });
     }
 
@@ -100,147 +52,108 @@ document.addEventListener('DOMContentLoaded', function () {
             hamburger.classList.toggle('active');
         });
     }
-
-    // ── DELEGATION: BAN / SELLER / VERIFY BUTTONS ─────────────────────────
-    document.addEventListener('click', function (e) {
-        // Ban/Unban user
-        if (e.target.classList.contains('ban-user-btn')) {
-            const { userId, userName } = e.target.dataset;
-            const isBan = e.target.textContent.trim() === 'Ban';
-            if (confirm(`${isBan ? 'Ban' : 'Unban'} ${userName}?`)) {
-                banUnbanUser(userId, isBan);
-                alert(`✓ ${userName} has been ${isBan ? 'banned' : 'unbanned'}!`);
-                loadUsersTable();
-            }
-        }
-
-        // Approve/Suspend seller
-        if (e.target.classList.contains('seller-action-btn')) {
-            const { sellerId, sellerName } = e.target.dataset;
-            const isApprove = e.target.textContent.trim() === 'Approve';
-            if (confirm(`${isApprove ? 'Approve' : 'Suspend'} ${sellerName}?`)) {
-                isApprove ? approveSeller(sellerId) : suspendSeller(sellerId);
-                alert(`✓ ${sellerName} has been ${isApprove ? 'approved' : 'suspended'}!`);
-                loadSellersTable();
-            }
-        }
-
-        // Verification approve
-        if (e.target.classList.contains('verify-approve-btn')) {
-            const card      = e.target.closest('.verification-card');
-            const brandName = card?.querySelector('h4')?.textContent;
-            if (brandName && confirm(`Approve ${brandName}?`)) {
-                alert(`✓ ${brandName} approved!`);
-                const sellers = StorageManager.getSellers();
-                if (!sellers.find(s => s.brandName === brandName)) {
-                    sellers.push({ id: 'S' + (sellers.length + 1), brandName, owner: 'New Owner', products: 0, revenue: '0 EGP', rating: '★★★☆☆ (0)', status: 'verified' });
-                    StorageManager.saveSellers(sellers);
-                }
-                card.style.opacity = '0.5';
-                e.target.disabled  = true;
-                loadSellersTable();
-            }
-        }
-
-        // Verification reject
-        if (e.target.classList.contains('verify-reject-btn')) {
-            const card      = e.target.closest('.verification-card');
-            const brandName = card?.querySelector('h4')?.textContent;
-            if (brandName && confirm(`Reject ${brandName}?`)) {
-                alert(`✓ ${brandName} rejected.`);
-                card.style.opacity = '0.5';
-                e.target.disabled  = true;
-            }
-        }
-    });
-
-    // ── SETTINGS FORMS ─────────────────────────────────────────────────────
-    const adminSettingsForm = document.getElementById('adminSettingsForm');
-    if (adminSettingsForm) {
-        adminSettingsForm.addEventListener('submit', e => {
-            e.preventDefault();
-            alert('✓ Settings saved!');
-        });
-    }
-
-    const updatePasswordForm = document.getElementById('updatePasswordForm');
-    if (updatePasswordForm) {
-        updatePasswordForm.addEventListener('submit', e => {
-            e.preventDefault();
-            const newPw  = document.getElementById('newPassword')?.value;
-            const confPw = document.getElementById('confirmPassword')?.value;
-            if (newPw !== confPw)    return alert('❌ Passwords do not match!');
-            if (newPw.length < 8)   return alert('❌ Password must be at least 8 characters!');
-            alert('✓ Password updated!');
-            updatePasswordForm.reset();
-        });
-    }
 });
 
 // ── USER TABLE ─────────────────────────────────────────────────────────────
 function loadUsersTable() {
     const tbody = document.querySelector('#users table tbody');
     if (!tbody) return;
-    tbody.innerHTML = '';
-    StorageManager.getUsers().forEach(user => {
-        const isBanned   = user.status === 'banned';
-        const row        = document.createElement('tr');
-        row.innerHTML = `
+    const users = DB.users;
+    tbody.innerHTML = users.map(user => `
+        <tr>
             <td>#${user.id}</td>
             <td>${user.name}</td>
             <td>${user.email}</td>
-            <td>${user.joinDate}</td>
-            <td>${user.orders}</td>
-            <td><span class="status-badge ${isBanned ? 'banned' : 'active'}">${user.status.toUpperCase()}</span></td>
+            <td>${user.joinDate || 'N/A'}</td>
+            <td>${user.orders || 0}</td>
+            <td><span class="status-badge active">${user.status || 'ACTIVE'}</span></td>
             <td>
-                <button class="btn btn-small ${isBanned ? 'btn-success' : 'btn-danger'} ban-user-btn"
-                        data-user-id="${user.id}" data-user-name="${user.name}">
-                    ${isBanned ? 'Unban' : 'Ban'}
-                </button>
-            </td>`;
-        tbody.appendChild(row);
-    });
-}
-
-function banUnbanUser(userId, isBan) {
-    const users = StorageManager.getUsers();
-    const user  = users.find(u => u.id === userId);
-    if (user) { user.status = isBan ? 'banned' : 'active'; StorageManager.saveUsers(users); }
+                <button class="btn btn-small btn-danger" onclick="banUser('${user.id}')">Ban</button>
+            </td>
+        </tr>
+    `).join('') || '<tr><td colspan="7">No users found.</td></tr>';
 }
 
 // ── SELLER TABLE ───────────────────────────────────────────────────────────
 function loadSellersTable() {
     const tbody = document.querySelector('#sellers table tbody');
     if (!tbody) return;
-    tbody.innerHTML = '';
-    StorageManager.getSellers().forEach(seller => {
-        const isVerified = seller.status === 'verified';
-        const row        = document.createElement('tr');
-        row.innerHTML = `
-            <td>${seller.brandName}</td>
-            <td>${seller.owner}</td>
-            <td>${seller.products}</td>
-            <td>${seller.revenue}</td>
-            <td>${seller.rating}</td>
-            <td><span class="status-badge ${isVerified ? 'verified' : 'pending'}">${seller.status.toUpperCase()}</span></td>
+    const sellers = DB.sellers;
+    tbody.innerHTML = sellers.map(s => `
+        <tr>
+            <td>${s.brandName}</td>
+            <td>${s.owner}</td>
+            <td>${s.products || 0}</td>
+            <td>${s.revenue || '0 EGP'}</td>
+            <td>${s.rating || 'N/A'}</td>
+            <td><span class="status-badge verified">${s.status.toUpperCase()}</span></td>
             <td>
-                <button class="btn btn-small ${isVerified ? 'btn-danger' : 'btn-success'} seller-action-btn"
-                        data-seller-id="${seller.id}" data-seller-name="${seller.brandName}">
-                    ${isVerified ? 'Suspend' : 'Approve'}
-                </button>
-            </td>`;
-        tbody.appendChild(row);
-    });
+                <button class="btn btn-small btn-danger" onclick="suspendSeller('${s.id}')">Suspend</button>
+            </td>
+        </tr>
+    `).join('') || '<tr><td colspan="7">No sellers found.</td></tr>';
 }
 
-function approveSeller(id) {
-    const sellers = StorageManager.getSellers();
-    const s = sellers.find(s => s.id === id);
-    if (s) { s.status = 'verified'; StorageManager.saveSellers(sellers); }
+// ── VERIFICATION QUEUE ─────────────────────────────────────────────────────
+function loadVerificationQueue() {
+    const container = document.querySelector('.verification-cards');
+    if (!container) return;
+
+    const apps = DB.applications.filter(a => a.status === 'pending');
+
+    if (apps.length === 0) {
+        container.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding:40px; color:var(--text-secondary);">No pending applications.</div>';
+        return;
+    }
+
+    container.innerHTML = apps.map(app => `
+        <div class="verification-card" id="card-${app.id}">
+            <div class="verification-header">
+                <h4>${app.brandName}</h4>
+                <span class="status-badge pending">Pending</span>
+            </div>
+            <div class="verification-details">
+                <p><strong>Owner:</strong> ${app.ownerName}</p>
+                <p><strong>Email:</strong> ${app.sellerEmail}</p>
+                <p><strong>Phone:</strong> ${app.ownerPhone}</p>
+                <p><strong>Category:</strong> ${app.brandCategory}</p>
+                <p><strong>Applied:</strong> ${new Date(app.appliedAt).toLocaleDateString()}</p>
+            </div>
+            <div class="verification-actions">
+                <button class="btn btn-primary" onclick="processApp('${app.id}', 'approve')">Approve</button>
+                <button class="btn btn-danger" onclick="processApp('${app.id}', 'reject')">Reject</button>
+            </div>
+        </div>
+    `).join('');
 }
 
-function suspendSeller(id) {
-    const sellers = StorageManager.getSellers();
-    const s = sellers.find(s => s.id === id);
-    if (s) { s.status = 'suspended'; StorageManager.saveSellers(sellers); }
-}
+window.processApp = (id, action) => {
+    const apps = DB.applications;
+    const appIndex = apps.findIndex(a => a.id === id);
+    if (appIndex === -1) return;
+
+    if (action === 'approve') {
+        const app = apps[appIndex];
+        const sellers = DB.sellers;
+        sellers.push({
+            id: 'S-' + Date.now(),
+            brandName: app.brandName,
+            owner: app.ownerName,
+            email: app.sellerEmail,
+            products: 0,
+            revenue: '0 EGP',
+            rating: '★★★☆☆ (0)',
+            status: 'verified'
+        });
+        DB.save('niledrip_sellers', sellers);
+        showToast(`Brand "${app.brandName}" approved!`);
+    } else {
+        showToast(`Application rejected.`, "error");
+    }
+
+    // Remove from applications or update status
+    apps.splice(appIndex, 1);
+    DB.saveApplications(apps);
+    loadVerificationQueue();
+    loadSellersTable();
+};
