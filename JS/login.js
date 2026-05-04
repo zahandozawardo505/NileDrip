@@ -2,7 +2,8 @@
 const loginForm = document.getElementById('loginForm');
 
 const DEMO_ACCOUNTS = [
-    { email: 'user@gmail.com',       password: 'user',  redirect: 'shop.html' },
+    { email: 'user@gmail.com',       password: 'user',  redirect: 'profile.html' },
+    { email: 'moh.tarek.arafa@gmail.com', password: 'user11223344', redirect: 'profile.html' },
     { email: 'admin@gmail.com',      password: 'admin', redirect: 'admin.html' },
     { email: 'nada-ayman@miu.com',   password: 'admin', redirect: 'admin.html' },
     { email: 'raak@gmail.com',       password: 'raak',  redirect: 'seller-dashboard.html' },
@@ -50,6 +51,13 @@ if (loginForm) {
 
         const match = DEMO_ACCOUNTS.find(a => a.email === email && a.password === password);
         if (match) {
+            if (match.redirect === 'profile.html') {
+                Store.set('niledrip_current_user', {
+                    firstName: 'Mohamed',
+                    lastName: '',
+                    email: match.email
+                });
+            }
             window.location.href = match.redirect;
             return;
         }
@@ -70,8 +78,16 @@ if (loginForm) {
             clearError(passwordError);
         }
 
-        if (isValid) {
-            alert('Invalid credentials. Try a demo account.');
+        if (!isValid) return;
+
+        const users = Store.get('niledrip_users', []);
+        const localUser = users.find(u => u.email === email && u.password === password);
+        if (localUser) {
+            Store.set('niledrip_current_user', localUser);
+            window.location.href = 'profile.html';
+            return;
         }
+
+        alert('Invalid credentials. Try a demo account.');
     });
 }

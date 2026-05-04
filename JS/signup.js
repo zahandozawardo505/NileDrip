@@ -5,6 +5,8 @@
 const signupForm = document.getElementById('signupForm');
 
 if (signupForm) {
+    const firstNameEl      = document.getElementById('firstName');
+    const lastNameEl       = document.getElementById('lastName');
     const signupEmailEl    = document.getElementById('signupEmail');
     const signupPasswordEl = document.getElementById('signupPassword');
     const confirmPassEl    = document.getElementById('confirmPassword');
@@ -66,10 +68,18 @@ if (signupForm) {
         if (!valid) return;
 
         const users = Store.get('niledrip_users', []);
-        users.push({ id: Date.now(), email: signupEmailEl.value });
+        const newUser = {
+            id: Date.now(),
+            firstName: (firstNameEl?.value || '').trim(),
+            lastName: (lastNameEl?.value || '').trim(),
+            email: signupEmailEl.value.trim().toLowerCase(),
+            password: signupPasswordEl.value
+        };
+        users.push(newUser);
         Store.set('niledrip_users', users);
+        Store.set('niledrip_current_user', newUser);
 
-        alert('Account created! Redirecting to login…');
-        window.location.href = 'login.html';
+        alert('Account created!');
+        window.location.href = 'profile.html';
     });
 }

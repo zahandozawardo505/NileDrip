@@ -48,6 +48,33 @@
         return { categories, brands, maxPrice };
     }
 
+    function normalizeCategory(value) {
+        const raw = (value || '').toLowerCase().trim();
+        const aliases = {
+            'hoodie': 'hoodies',
+            'hoodies': 'hoodies',
+            'tee': 'tees',
+            'tees': 'tees',
+            't-shirt': 'tees',
+            'tshirts': 'tees',
+            't-shirts': 'tees',
+            'sweatpant': 'sweatpants',
+            'sweatpants': 'sweatpants',
+            'accessory': 'accessories',
+            'accessories': 'accessories'
+        };
+        return aliases[raw] || raw;
+    }
+
+    function applyCategoryFromQuery() {
+        const params = new URLSearchParams(window.location.search);
+        const category = normalizeCategory(params.get('category'));
+        if (!category) return;
+
+        const target = document.querySelector(`.category-filter[value="${category}"]`);
+        if (target) target.checked = true;
+    }
+
     function applySort(list, sortVal) {
         const copy = [...list];
         if (sortVal === 'price-low') return copy.sort((a, b) => a.price - b.price);
@@ -211,6 +238,7 @@
         });
     }
 
+    applyCategoryFromQuery();
     updateCompareButton();
     renderProducts();
 })();
